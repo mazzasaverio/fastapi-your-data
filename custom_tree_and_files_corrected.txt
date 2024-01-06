@@ -1,3 +1,35 @@
+/home/sam/github/data-fastapi
+├── app
+│   ├── api
+│   │   └── config.py
+│   ├── dependencies
+│   │   ├── odm_connection.py
+│   │   └── orm_connection.py
+│   ├── main.py
+│   ├── models
+│   └── services
+├── code_report.py
+├── custom_tree_and_files_corrected.txt
+├── docker
+├── .env
+├── .env.sample
+├── .gitignore
+├── LICENSE
+├── logs
+├── README.md
+├── scripts
+├── terraform
+└── tests
+
+11 directories, 11 files
+
+
+=== Content of /home/sam/github/data-fastapi/code_report.py ===
+
+Code present but not reported for space reasons
+
+=== Content of /home/sam/github/data-fastapi/README.md ===
+
 # Data-FastAPI
 
 ## Overview
@@ -102,3 +134,55 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - your@email.com
 Project Link: https://github.com/yourusername/data-fastapi
+
+
+=== Content of /home/sam/github/data-fastapi/.env.sample ===
+
+# .env file
+ENVIRONMENT=development  # or 'production'
+
+# PostgreSQL
+POSTGRES_URL_DEV=postgresql://user:password@localhost/mydatabase
+POSTGRES_URL_PROD=postgresql://user:password@prod_host/prod_db
+
+# MongoDB
+MONGODB_URL_DEV=mongodb://localhost:27017/mydatabase
+MONGODB_URL_PROD=mongodb://prod_host:27017/prod_db
+
+# Add similar variables for Redis and other databases
+
+
+=== Content of /home/sam/github/data-fastapi/app/main.py ===
+
+
+
+=== Content of /home/sam/github/data-fastapi/app/dependencies/odm_connection.py ===
+
+
+
+=== Content of /home/sam/github/data-fastapi/app/dependencies/orm_connection.py ===
+
+
+
+=== Content of /home/sam/github/data-fastapi/app/api/config.py ===
+
+# config.py
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+class Config:
+    ENVIRONMENT = os.getenv("ENVIRONMENT")
+    POSTGRES_URL = (
+        os.getenv("POSTGRES_URL_DEV")
+        if ENVIRONMENT == "development"
+        else os.getenv("POSTGRES_URL_PROD")
+    )
+    MONGODB_URL = (
+        os.getenv("MONGODB_URL_DEV")
+        if ENVIRONMENT == "development"
+        else os.getenv("MONGODB_URL_PROD")
+    )
+    # Add configurations for other databases
