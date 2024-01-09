@@ -2,10 +2,18 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from api.models.user import User, UserCreate, UserResponse
-from api.database.connection import get_db
+from api.database.connection import SessionLocal
 import uuid
 
 user_router = APIRouter(tags=["User"])
+
+
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
 
 
 @user_router.post("/signup", response_model=UserResponse)

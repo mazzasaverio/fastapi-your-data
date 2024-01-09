@@ -84,12 +84,15 @@
 │   ├── esg_spider_2024-01-09_23-18-53_232811.log
 │   ├── esg_spider_2024-01-09_23-20-49_749928.log
 │   ├── esg_spider_2024-01-09_23-25-23_148722.log
-│   └── esg_spider_2024-01-09_23-29-21_152170.log
+│   ├── esg_spider_2024-01-09_23-29-21_152170.log
+│   ├── esg_spider_2024-01-09_23-31-53_785688.log
+│   ├── esg_spider_2024-01-09_23-33-13_366983.log
+│   └── esg_spider_2024-01-09_23-35-58_555867.log
 ├── README.md
 ├── requirements.txt
 └── tests
 
-8 directories, 82 files
+8 directories, 85 files
 
 
 === Content of /home/sam/github/data-fastapi/code_report.py ===
@@ -245,10 +248,18 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from api.models.user import User, UserCreate, UserResponse
-from api.database.connection import get_db
+from api.database.connection import SessionLocal
 import uuid
 
 user_router = APIRouter(tags=["User"])
+
+
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
 
 
 @user_router.post("/signup", response_model=UserResponse)
@@ -366,6 +377,7 @@ from sqlalchemy import Column, Integer, String, DateTime
 from api.database.connection import Base
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 
 # SQLAlchemy ORM model
@@ -388,7 +400,7 @@ class DocumentsResponse(BaseModel):
     id: int
     url: str
     status: str
-    notes: str
+    notes: Optional[str]  # Allow None values
     download_path: str
     downloaded_at: datetime
     keywords_namefile: str
