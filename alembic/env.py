@@ -7,8 +7,8 @@ import sys
 # Important: Add the app directory to the sys.path
 sys.path.append(os.getcwd())
 
-from app.core.database.orm_connection import Base  # Import the Base from your models
-from app.config.settings import settings  # Import your settings
+from api.core.database.connection import Base  # Import the Base from your models
+from api.config.settings import settings  # Import your settings
 
 # Alembic Config object
 config = context.config
@@ -22,11 +22,6 @@ if config.config_file_name is not None:
 
 # Set the target metadata for autogenerate
 target_metadata = Base.metadata
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
 
 
 def run_migrations_offline():

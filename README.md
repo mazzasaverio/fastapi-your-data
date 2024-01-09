@@ -13,28 +13,7 @@
 
 ## Getting Started
 
-data-fastapi/
-│
-├── app/ # Application source files
-│ ├── api/ # API routes and endpoints
-│ ├── models/ # Database models (SQLAlchemy and Beanie)
-│ ├── services/ # Business logic
-│ ├── dependencies/ # Dependencies for FastAPI (e.g., database session, security)
-│ └── main.py # Entry point of the FastAPI application
-│
-├── tests/ # Unit and integration tests
-│
-├── scripts/ # Utility scripts (e.g., setup, deployment)
-│
-├── docker/ # Dockerfiles and docker-compose files
-│
-├── terraform/ # Terraform files for infrastructure setup
-│
-├── .env.sample # Sample environment variables file
-│
-├── requirements.txt # Python dependencies
-│
-└── README.md # Project documentation
+aggiungi il tree della repo con la spiegazione di cosa rappresenta ogni cartella e file
 
 ### Prerequisites
 
