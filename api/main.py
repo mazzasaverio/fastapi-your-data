@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from api.database.connection import conn
-from api.routes.docs import docs_router
+from api.routes.pdf_downloaded import docs_router
+from api.routes.users import user_router
 from contextlib import asynccontextmanager
 from api.config.logger_config import logger
 import uvicorn
@@ -16,12 +17,18 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 # Register routes
-app.include_router(docs_router, prefix="/docs")
+app.include_router(docs_router, prefix="/pdf_downloaded")
+app.include_router(user_router, prefix="/user")
+
+
+@app.get("/metrics")
+def metrics():
+    return {"message": "This is a dummy metrics endpoint."}
 
 
 @app.get("/")
 async def home():
-    return RedirectResponse(url="/docs/")
+    return RedirectResponse(url="/docs")
 
 
 if __name__ == "__main__":

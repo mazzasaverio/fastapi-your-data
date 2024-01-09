@@ -1,12 +1,4 @@
 /home/sam/github/data-fastapi
-├── alembic
-│   ├── env.py
-│   ├── README
-│   ├── script.py.mako
-│   └── versions
-│       └── f9d4e03034e4_initial_migration.py
-├── alembic.ini
-├── alembic.ini.template
 ├── api
 │   ├── config
 │   │   ├── __init__.py
@@ -18,12 +10,12 @@
 │   ├── __init__.py
 │   ├── main.py
 │   ├── models
-│   │   └── docs_pdf.py
-│   ├── routes
-│   │   ├── docs.py
-│   │   └── __init__.py
-│   └── services
-│       └── basic_crud_operations.py
+│   │   ├── docs_pdf.py
+│   │   └── user.py
+│   └── routes
+│       ├── __init__.py
+│       ├── pdf_downloaded.py
+│       └── users.py
 ├── code_report.py
 ├── custom_tree_and_files_corrected.txt
 ├── .env
@@ -31,13 +23,51 @@
 ├── .gitignore
 ├── LICENSE
 ├── logs
-│   ├── esg_spider_2024-01-09_14-30-53_222719.log
-│   └── esg_spider_2024-01-09_14-31-44_529926.log
+│   ├── esg_spider_2024-01-09_16-48-16_693243.log
+│   ├── esg_spider_2024-01-09_18-11-52_035169.log
+│   ├── esg_spider_2024-01-09_18-13-04_357653.log
+│   ├── esg_spider_2024-01-09_18-13-30_774048.log
+│   ├── esg_spider_2024-01-09_18-16-48_130816.log
+│   ├── esg_spider_2024-01-09_18-45-54_293038.log
+│   ├── esg_spider_2024-01-09_18-51-07_955178.log
+│   ├── esg_spider_2024-01-09_18-51-51_606993.log
+│   ├── esg_spider_2024-01-09_18-51-59_641442.log
+│   ├── esg_spider_2024-01-09_18-52-26_948306.log
+│   ├── esg_spider_2024-01-09_18-54-31_395396.log
+│   ├── esg_spider_2024-01-09_18-54-36_273356.log
+│   ├── esg_spider_2024-01-09_18-56-07_865700.log
+│   ├── esg_spider_2024-01-09_18-56-18_150400.log
+│   ├── esg_spider_2024-01-09_18-57-04_728457.log
+│   ├── esg_spider_2024-01-09_18-57-15_560143.log
+│   ├── esg_spider_2024-01-09_18-57-22_161624.log
+│   ├── esg_spider_2024-01-09_18-58-44_156825.log
+│   ├── esg_spider_2024-01-09_18-58-50_019638.log
+│   ├── esg_spider_2024-01-09_18-59-22_737409.log
+│   ├── esg_spider_2024-01-09_19-00-34_139328.log
+│   ├── esg_spider_2024-01-09_19-02-40_972514.log
+│   ├── esg_spider_2024-01-09_19-02-45_677772.log
+│   ├── esg_spider_2024-01-09_19-02-57_951438.log
+│   ├── esg_spider_2024-01-09_19-04-37_337167.log
+│   ├── esg_spider_2024-01-09_19-04-40_916752.log
+│   ├── esg_spider_2024-01-09_19-08-17_357403.log
+│   ├── esg_spider_2024-01-09_19-37-56_913244.log
+│   ├── esg_spider_2024-01-09_19-38-56_582554.log
+│   ├── esg_spider_2024-01-09_19-41-52_444704.log
+│   ├── esg_spider_2024-01-09_19-58-01_962208.log
+│   ├── esg_spider_2024-01-09_19-59-26_922606.log
+│   ├── esg_spider_2024-01-09_20-00-01_017456.log
+│   ├── esg_spider_2024-01-09_20-01-10_914355.log
+│   ├── esg_spider_2024-01-09_20-01-44_052137.log
+│   ├── esg_spider_2024-01-09_20-03-36_376699.log
+│   ├── esg_spider_2024-01-09_20-06-10_615812.log
+│   ├── esg_spider_2024-01-09_20-08-07_699583.log
+│   ├── esg_spider_2024-01-09_20-08-59_985006.log
+│   └── esg_spider_2024-01-09_20-16-43_909620.log
 ├── README.md
 ├── requirements.txt
 └── tests
 
-11 directories, 27 files
+8 directories, 60 files
 
 
 === Content of /home/sam/github/data-fastapi/code_report.py ===
@@ -46,310 +76,55 @@ Code present but not reported for space reasons
 
 === Content of /home/sam/github/data-fastapi/README.md ===
 
-# Data-FastAPI
+# data-FastAPI
 
 ## Overview
 
-`data-fastapi` is a comprehensive API designed for selling datasets. It supports various data types, both structured and unstructured, and offers modular, scalable access to data via an API key authentication system.
-
-## Features
-
-- Support for multiple databases: MongoDB, PostgreSQL, Redis, and a Data Lakehouse.
-- Local and cloud deployment options for cost-effective development and scalability.
-- API key authentication for secure and controlled data access.
-- Modular structure for easy maintenance and scalability.
+This repository contains the foundational code for a FastAPI application that connects to a SQL database using SQLModel. The goal is to deploy this API on Google Cloud Platform (GCP) and utilize Cloud SQL as the database service.
 
 ## Getting Started
 
-aggiungi il tree della repo con la spiegazione di cosa rappresenta ogni cartella e file
-
-### Prerequisites
-
-- Docker
-- Python 3.8+
-- Terraform (for cloud deployment)
-
 ### Installation
 
-Clone the repository:
+1. Clone the repository:
 
-```
-git clone https://github.com/yourusername/data-fastapi.git
-```
+   ```bash
+   git clone https://github.com/yourusername/your-repo-name.git
+   ```
 
-Install dependencies:
+2. Navigate to the project directory:
 
-```
-pip install -r requirements.txt
-```
+   ```bash
+   cd your-repo-name
+   ```
 
-### Setting Up Local Environment
+3. Install required dependencies:
 
-Copy `.env.sample` to create a `.env` file and adjust the variables to suit your local environment.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Run the Docker containers for databases:
+### Local Development
 
-```
-docker-compose up -d
-```
+1. Start your local development server:
 
-### Running the Application
+   ```bash
+   uvicorn main:app --reload
+   ```
 
-Start the FastAPI application:
+2. Access the API at `http://localhost:8000`.
 
-```
-uvicorn app.main:app --reload
-```
+### Database Configuration
 
-## API Documentation
-
-Access the API documentation at `http://localhost:8000/docs`.
-
-## Testing
-
-Run tests using:
-
-```
-pytest
-```
-
-## Deployment
-
-Refer to the `terraform/` directory for cloud deployment and `docker/` for containerization details.
+- Configure your local and Cloud SQL database credentials in the `.env` file.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome!
+Contributions to this project are welcome. Please fork the repository and submit a pull request for any enhancements.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-
-Your Name - your@email.com
-Project Link: https://github.com/yourusername/data-fastapi
-
-
-=== Content of /home/sam/github/data-fastapi/alembic.ini ===
-
-# A generic, single database configuration.
-
-[alembic]
-# path to migration scripts
-script_location = alembic
-
-# template used to generate migration file names; The default value is %%(rev)s_%%(slug)s
-# Uncomment the line below if you want the files to be prepended with date and time
-# see https://alembic.sqlalchemy.org/en/latest/tutorial.html#editing-the-ini-file
-# for all available tokens
-# file_template = %%(year)d_%%(month).2d_%%(day).2d_%%(hour).2d%%(minute).2d-%%(rev)s_%%(slug)s
-
-# sys.path path, will be prepended to sys.path if present.
-# defaults to the current working directory.
-prepend_sys_path = .
-
-# timezone to use when rendering the date within the migration file
-# as well as the filename.
-# If specified, requires the python>=3.9 or backports.zoneinfo library.
-# Any required deps can installed by adding `alembic[tz]` to the pip requirements
-# string value is passed to ZoneInfo()
-# leave blank for localtime
-# timezone =
-
-# max length of characters to apply to the
-# "slug" field
-# truncate_slug_length = 40
-
-# set to 'true' to run the environment during
-# the 'revision' command, regardless of autogenerate
-# revision_environment = false
-
-# set to 'true' to allow .pyc and .pyo files without
-# a source .py file to be detected as revisions in the
-# versions/ directory
-# sourceless = false
-
-# version location specification; This defaults
-# to alembic/versions.  When using multiple version
-# directories, initial revisions must be specified with --version-path.
-# The path separator used here should be the separator specified by "version_path_separator" below.
-# version_locations = %(here)s/bar:%(here)s/bat:alembic/versions
-
-# version path separator; As mentioned above, this is the character used to split
-# version_locations. The default within new alembic.ini files is "os", which uses os.pathsep.
-# If this key is omitted entirely, it falls back to the legacy behavior of splitting on spaces and/or commas.
-# Valid values for version_path_separator are:
-#
-# version_path_separator = :
-# version_path_separator = ;
-# version_path_separator = space
-version_path_separator = os  # Use os.pathsep. Default configuration used for new projects.
-
-# set to 'true' to search source files recursively
-# in each "version_locations" directory
-# new in Alembic version 1.10
-# recursive_version_locations = false
-
-# the output encoding used when revision files
-# are written from script.py.mako
-# output_encoding = utf-8
-
-sqlalchemy.url = postgresql://postgres:postgres@localhost/data_texts
-
-
-[post_write_hooks]
-# post_write_hooks defines scripts or Python functions that are run
-# on newly generated revision scripts.  See the documentation for further
-# detail and examples
-
-# format using "black" - use the console_scripts runner, against the "black" entrypoint
-# hooks = black
-# black.type = console_scripts
-# black.entrypoint = black
-# black.options = -l 79 REVISION_SCRIPT_FILENAME
-
-# lint with attempts to fix using "ruff" - use the exec runner, execute a binary
-# hooks = ruff
-# ruff.type = exec
-# ruff.executable = %(here)s/.venv/bin/ruff
-# ruff.options = --fix REVISION_SCRIPT_FILENAME
-
-# Logging configuration
-[loggers]
-keys = root,sqlalchemy,alembic
-
-[handlers]
-keys = console
-
-[formatters]
-keys = generic
-
-[logger_root]
-level = WARN
-handlers = console
-qualname =
-
-[logger_sqlalchemy]
-level = WARN
-handlers =
-qualname = sqlalchemy.engine
-
-[logger_alembic]
-level = INFO
-handlers =
-qualname = alembic
-
-[handler_console]
-class = StreamHandler
-args = (sys.stderr,)
-level = NOTSET
-formatter = generic
-
-[formatter_generic]
-format = %(levelname)-5.5s [%(name)s] %(message)s
-datefmt = %H:%M:%S
-
-
-=== Content of /home/sam/github/data-fastapi/alembic/env.py ===
-
-from logging.config import fileConfig
-from sqlalchemy import engine_from_config, pool
-from alembic import context
-import os
-import sys
-
-# Important: Add the app directory to the sys.path
-sys.path.append(os.getcwd())
-
-from api.core.database.connection import Base  # Import the Base from your models
-from api.config.settings import settings  # Import your settings
-
-# Alembic Config object
-config = context.config
-
-# Overwrite the sqlalchemy.url from alembic.ini with the one from settings
-config.set_main_option("sqlalchemy.url", settings.sqlalchemy_database_url)
-
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-
-
-# Set the target metadata for autogenerate
-target_metadata = Base.metadata
-
-
-def run_migrations_offline():
-    url = config.get_main_option("sqlalchemy.url")
-    context.configure(url=url, target_metadata=target_metadata, literal_binds=True)
-    with context.begin_transaction():
-        context.run_migrations()
-
-
-def run_migrations_online():
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-    with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
-        with context.begin_transaction():
-            context.run_migrations()
-
-
-if context.is_offline_mode():
-    run_migrations_offline()
-else:
-    run_migrations_online()
-
-
-if context.is_offline_mode():
-    run_migrations_offline()
-else:
-    run_migrations_online()
-
-
-=== Content of /home/sam/github/data-fastapi/alembic/versions/f9d4e03034e4_initial_migration.py ===
-
-"""Initial migration
-
-Revision ID: f9d4e03034e4
-Revises: 
-Create Date: 2024-01-09 15:03:58.527757
-
-"""
-from typing import Sequence, Union
-
-from alembic import op
-import sqlalchemy as sa
-from sqlalchemy.dialects import postgresql
-
-# revision identifiers, used by Alembic.
-revision: str = 'f9d4e03034e4'
-down_revision: Union[str, None] = None
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
-
-
-def upgrade() -> None:
-    # ### commands auto generated by Alembic - please adjust! ###
-    op.drop_table('pdf_downloads')
-    # ### end Alembic commands ###
-
-
-def downgrade() -> None:
-    # ### commands auto generated by Alembic - please adjust! ###
-    op.create_table('pdf_downloads',
-    sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False),
-    sa.Column('url', sa.VARCHAR(), autoincrement=False, nullable=True),
-    sa.Column('status', sa.VARCHAR(), autoincrement=False, nullable=True),
-    sa.Column('notes', sa.VARCHAR(), autoincrement=False, nullable=True),
-    sa.Column('download_path', sa.VARCHAR(), autoincrement=False, nullable=True),
-    sa.Column('downloaded_at', postgresql.TIMESTAMP(), autoincrement=False, nullable=True),
-    sa.Column('keywords_namefile', sa.VARCHAR(), autoincrement=False, nullable=True)
-    )
-    # ### end Alembic commands ###
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
 === Content of /home/sam/github/data-fastapi/api/main.py ===
@@ -357,14 +132,11 @@ def downgrade() -> None:
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from api.database.connection import conn
-from api.routes.docs import docs_router
+from api.routes.pdf_downloaded import docs_router
+from api.routes.users import user_router
 from contextlib import asynccontextmanager
 from api.config.logger_config import logger
 import uvicorn
-
-app = FastAPI()
-# Register routes
-app.include_router(docs_router, prefix="/docs")
 
 
 @asynccontextmanager
@@ -373,13 +145,25 @@ async def lifespan(app: FastAPI):
     yield
 
 
+app = FastAPI(lifespan=lifespan)
+
+# Register routes
+app.include_router(docs_router, prefix="/pdf_downloaded")
+app.include_router(user_router, prefix="/user")
+
+
+@app.get("/metrics")
+def metrics():
+    return {"message": "This is a dummy metrics endpoint."}
+
+
 @app.get("/")
 async def home():
-    return RedirectResponse(url="/docs/")
+    return RedirectResponse(url="/docs")
 
 
-# if __name__ == "__main__":
-#     uvicorn.run("main:api", host="0.0.0.0", port=8080, reload=True)
+if __name__ == "__main__":
+    uvicorn.run("main:api", host="0.0.0.0", port=8080, reload=True)
 
 
 === Content of /home/sam/github/data-fastapi/api/config/logger_config.py ===
@@ -417,8 +201,6 @@ class Settings(BaseSettings):
 
     sqlalchemy_database_url_dev: str
     sqlalchemy_database_url_prod: str
-    api_key_dev: str
-    api_key_prod: str
 
     @property
     def sqlalchemy_database_url(self) -> str:
@@ -428,12 +210,6 @@ class Settings(BaseSettings):
             else self.sqlalchemy_database_url_prod
         )
 
-    @property
-    def api_key(self) -> str:
-        return (
-            self.api_key_dev if self.environment == "development" else self.api_key_prod
-        )
-
     class Config:
         env_file = ".env"
 
@@ -441,13 +217,55 @@ class Settings(BaseSettings):
 settings = Settings()
 
 
-=== Content of /home/sam/github/data-fastapi/api/routes/docs.py ===
+=== Content of /home/sam/github/data-fastapi/api/routes/users.py ===
+
+from fastapi import APIRouter, HTTPException, status, Depends
+from sqlmodel import Session, select
+from api.models.user import User
+from api.database.connection import get_session
+
+user_router = APIRouter(tags=["User"])
+users = {}
+
+
+@user_router.post("/signup")
+async def sign_new_user(
+    data: User,
+) -> dict:
+    if data.email in users:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="User with supplied username  exists",
+        )
+    users[data.email] = data
+    return {"message": "User successfully registered!"}
+
+
+@user_router.post("/signup")
+async def sign_new_user(data: User, session: Session = Depends(get_session)) -> dict:
+    # Check if the user already exists in the database
+    existing_user = session.exec(select(User).where(User.email == data.email)).first()
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="User with supplied email already exists",
+        )
+
+    # Add new user to the database
+    session.add(data)
+    session.commit()
+    session.refresh(data)
+    return {"message": "User successfully registered!"}
+
+
+=== Content of /home/sam/github/data-fastapi/api/routes/pdf_downloaded.py ===
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from api.models.docs_pdf import PdfDownload
 from api.database.connection import get_session
 from typing import List
 from sqlmodel import select
+from api.config.logger_config import logger
 
 docs_router = APIRouter(tags=["Docs"])
 
@@ -456,6 +274,7 @@ docs_router = APIRouter(tags=["Docs"])
 async def retrieve_all_events(session=Depends(get_session)) -> List[PdfDownload]:
     statement = select(PdfDownload)
     events = session.exec(statement).all()
+    logger.info(f"###### Retrieved {len(events)} events")
     return events
 
 
@@ -475,8 +294,24 @@ class PdfDownload(SQLModel, table=True):
     keywords_namefile: str
 
 
-=== Content of /home/sam/github/data-fastapi/api/services/basic_crud_operations.py ===
+=== Content of /home/sam/github/data-fastapi/api/models/user.py ===
 
+from sqlmodel import SQLModel, Field
+
+
+class User(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    email: str
+    password: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "email": "test@gmail.com",
+                "username": "strong!!!",
+                "events": [],
+            }
+        }
 
 
 === Content of /home/sam/github/data-fastapi/api/database/connection.py ===
@@ -484,18 +319,18 @@ class PdfDownload(SQLModel, table=True):
 from sqlmodel import create_engine, SQLModel, Session
 from ..config.settings import settings
 from api.models.docs_pdf import PdfDownload
+from api.models.user import User
 from api.config.logger_config import logger
 
-engine_url = create_engine(settings.sqlalchemy_database_url, echo=True)
+engine = create_engine(settings.sqlalchemy_database_url, echo=False)
 
 
 def conn():
-    SQLModel.metadata.create_all(engine_url)
-    logger.info("Database tables created")
+    SQLModel.metadata.create_all(engine)
 
 
 def get_session():
-    with Session(engine_url) as session:
+    with Session(engine) as session:
         yield session
 
 

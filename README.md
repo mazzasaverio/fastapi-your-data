@@ -1,8 +1,8 @@
-# DATA-FASTAPI
+# data-FastAPI
 
 ## Overview
 
-This repository contains the foundational code for a FastAPI application that connects to a SQL database using SQLModel. The goal is to deploy this API on Google Cloud Platform (GCP) and utilize Cloud SQL as the database service. It is designed to expose data securely through tokens issued to users.
+This repository contains the foundational code for a FastAPI application that connects to a SQL database using SQLModel. The goal is to deploy this API on Google Cloud Platform (GCP) and utilize Cloud SQL as the database service.
 
 ## Getting Started
 
