@@ -1,20 +1,31 @@
-from sqlmodel import create_engine, SQLModel, Session
-from ..config.settings import settings
-from api.models.docs_pdf import PdfDownload
-from api.models.user import User
-from api.config.logger_config import logger
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from contextlib import contextmanager
+from api.config.settings import settings
 
+# Define the base class for your models
+Base = declarative_base()
+
+# Create the SQLAlchemy engine
 engine = create_engine(settings.sqlalchemy_database_url, echo=False)
 
-
-def conn():
-    SQLModel.metadata.create_all(engine)
-
-
-def get_session():
-    with Session(engine) as session:
-        yield session
+# Create a configured "Session" class
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-if __name__ == "__main__":
-    conn()
+# Function to create all tables
+def init_db():
+    import api.models  # Import all the modules that define your SQLAlchemy models
+
+    Base.metadata.create_all(bind=engine)
+
+
+# Dependency to get a database session
+@contextmanager
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

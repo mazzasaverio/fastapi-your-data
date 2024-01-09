@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from api.database.connection import conn
-from api.routes.pdf_downloaded import docs_router
+from api.database.connection import init_db
+from api.routes.documents import docs_router
 from api.routes.users import user_router
 from contextlib import asynccontextmanager
 from api.config.logger_config import logger
@@ -10,14 +10,14 @@ import uvicorn
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    conn()
+    init_db()
     yield
 
 
 app = FastAPI(lifespan=lifespan)
 
 # Register routes
-app.include_router(docs_router, prefix="/pdf_downloaded")
+app.include_router(docs_router, prefix="/documents")
 app.include_router(user_router, prefix="/user")
 
 

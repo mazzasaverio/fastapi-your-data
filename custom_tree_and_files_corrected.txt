@@ -10,11 +10,11 @@
 │   ├── __init__.py
 │   ├── main.py
 │   ├── models
-│   │   ├── docs_pdf.py
+│   │   ├── documents.py
 │   │   └── user.py
 │   └── routes
+│       ├── documents.py
 │       ├── __init__.py
-│       ├── pdf_downloaded.py
 │       └── users.py
 ├── code_report.py
 ├── custom_tree_and_files_corrected.txt
@@ -71,12 +71,25 @@
 │   ├── esg_spider_2024-01-09_20-49-44_996025.log
 │   ├── esg_spider_2024-01-09_20-53-35_407252.log
 │   ├── esg_spider_2024-01-09_20-54-18_360731.log
-│   └── esg_spider_2024-01-09_20-54-53_637685.log
+│   ├── esg_spider_2024-01-09_20-54-53_637685.log
+│   ├── esg_spider_2024-01-09_20-59-38_057029.log
+│   ├── esg_spider_2024-01-09_21-13-59_629168.log
+│   ├── esg_spider_2024-01-09_21-14-41_580047.log
+│   ├── esg_spider_2024-01-09_23-00-52_536701.log
+│   ├── esg_spider_2024-01-09_23-01-11_429024.log
+│   ├── esg_spider_2024-01-09_23-10-46_392724.log
+│   ├── esg_spider_2024-01-09_23-13-11_966738.log
+│   ├── esg_spider_2024-01-09_23-15-15_880385.log
+│   ├── esg_spider_2024-01-09_23-17-24_100778.log
+│   ├── esg_spider_2024-01-09_23-18-53_232811.log
+│   ├── esg_spider_2024-01-09_23-20-49_749928.log
+│   ├── esg_spider_2024-01-09_23-25-23_148722.log
+│   └── esg_spider_2024-01-09_23-29-21_152170.log
 ├── README.md
 ├── requirements.txt
 └── tests
 
-8 directories, 69 files
+8 directories, 82 files
 
 
 === Content of /home/sam/github/data-fastapi/code_report.py ===
@@ -140,8 +153,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from api.database.connection import conn
-from api.routes.pdf_downloaded import docs_router
+from api.database.connection import init_db
+from api.routes.documents import docs_router
 from api.routes.users import user_router
 from contextlib import asynccontextmanager
 from api.config.logger_config import logger
@@ -150,14 +163,14 @@ import uvicorn
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    conn()
+    init_db()
     yield
 
 
 app = FastAPI(lifespan=lifespan)
 
 # Register routes
-app.include_router(docs_router, prefix="/pdf_downloaded")
+app.include_router(docs_router, prefix="/documents")
 app.include_router(user_router, prefix="/user")
 
 
@@ -228,158 +241,189 @@ settings = Settings()
 
 === Content of /home/sam/github/data-fastapi/api/routes/users.py ===
 
-from fastapi import APIRouter, HTTPException, status, Depends
-from sqlmodel import Session, select
-from api.models.user import User
-from api.database.connection import get_session
+from fastapi import APIRouter, HTTPException, Depends, status
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+from api.models.user import User, UserCreate, UserResponse
+from api.database.connection import get_db
 import uuid
 
 user_router = APIRouter(tags=["User"])
-users = {}
 
 
-@user_router.post("/signup")
-async def sign_new_user(data: User, session: Session = Depends(get_session)) -> dict:
-    # Check if the user already exists in the database
-    existing_user = session.exec(select(User).where(User.email == data.email)).first()
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="User with supplied email already exists",
+@user_router.post("/signup", response_model=UserResponse)
+async def sign_new_user(user_data: UserCreate, db: Session = Depends(get_db)):
+    with db as session:
+        existing_user = session.execute(
+            select(User).where(User.email == user_data.email)
+        ).scalar()
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="User with supplied email already exists",
+            )
+
+        new_user = User(
+            email=user_data.email, password=user_data.password, token=str(uuid.uuid4())
         )
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
 
-    # Generate a unique token for the new user
-    data.token = str(uuid.uuid4())
-
-    # Add new user to the database
-    session.add(data)
-    session.commit()
-    session.refresh(data)
-    return {"message": "User successfully registered!"}
+    return UserResponse(email=new_user.email, token=new_user.token)
 
 
-@user_router.post("/signin")
+@user_router.post("/signin", response_model=UserResponse)
 async def sign_user_in(
-    email: str, password: str, session: Session = Depends(get_session)
-) -> dict:
-    user = session.exec(select(User).where(User.email == email)).first()
+    email: str, password: str, db: Session = Depends(get_db)
+) -> UserResponse:
+    user = db.execute(select(User).where(User.email == email)).scalar()
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
     if user.password != password:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect password",
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password"
         )
-    return {"message": "User successfully signed in!", "token": user.token}
+    return UserResponse(email=user.email, token=user.token)
 
 
-=== Content of /home/sam/github/data-fastapi/api/routes/pdf_downloaded.py ===
+=== Content of /home/sam/github/data-fastapi/api/routes/documents.py ===
 
 from fastapi import APIRouter, Depends, HTTPException, status, Security
-from fastapi.security import APIKeyHeader
-from sqlmodel import Session, select
-from typing import List
-from api.models.docs_pdf import PdfDownload
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+from api.models.documents import Documents, DocumentsResponse
 from api.models.user import User
-from api.database.connection import get_session
-from api.config.logger_config import logger
+from api.database.connection import SessionLocal
+from fastapi.security import APIKeyHeader
+from typing import List
 
-# Router setup for documents
 docs_router = APIRouter(tags=["Docs"])
-
-# Header for token authentication
 api_key_header = APIKeyHeader(name="Token", auto_error=False)
 
 
-# Dependency to get the current user based on the token
-async def get_current_user(
-    token: str = Security(api_key_header), session: Session = Depends(get_session)
-):
-    if token is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="No token provided"
-        )
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
 
-    user = session.exec(select(User).where(User.token == token)).first()
+
+async def get_current_user(
+    token: str = Security(api_key_header), db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(User.token == token).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         )
-
     return user
 
 
-# Endpoint to retrieve all documents, accessible only with valid token
-@docs_router.get("/", response_model=List[PdfDownload])
+@docs_router.get("/", response_model=List[DocumentsResponse])
 async def retrieve_all_records(
-    user: User = Depends(get_current_user), session: Session = Depends(get_session)
-) -> List[PdfDownload]:
-    statement = select(PdfDownload)
-    events = session.exec(statement).all()
-    logger.info(f"Retrieved {len(events)} records from the database")
-    return events
-
-
-=== Content of /home/sam/github/data-fastapi/api/models/docs_pdf.py ===
-
-from sqlmodel import SQLModel, Field
-from datetime import datetime
-
-
-class PdfDownload(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    url: str = Field(sa_column_kwargs={"unique": True})
-    status: str
-    notes: str
-    download_path: str
-    downloaded_at: datetime = Field(default_factory=datetime.utcnow)
-    keywords_namefile: str
+    user: User = Depends(get_current_user), db: Session = Depends(get_db)
+) -> List[DocumentsResponse]:
+    records = db.query(Documents).all()
+    return records
 
 
 === Content of /home/sam/github/data-fastapi/api/models/user.py ===
 
-from sqlmodel import SQLModel, Field
+from sqlalchemy import Column, Integer, String
+from api.database.connection import Base
+from pydantic import BaseModel, EmailStr
 import uuid
 
 
-class User(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    email: str
-    password: str
-    token: str = Field(default_factory=lambda: str(uuid.uuid4()))
+# SQLAlchemy model
+class User(Base):
+    __tablename__ = "users"
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "email": "test@gmail.com",
-                "username": "strong!!!",
-                "events": [],
-            }
-        }
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    password = Column(String)
+    token = Column(String, default=lambda: str(uuid.uuid4()))
+
+
+# Pydantic model
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class UserResponse(BaseModel):
+    email: EmailStr
+    token: str
+
+
+=== Content of /home/sam/github/data-fastapi/api/models/documents.py ===
+
+from sqlalchemy import Column, Integer, String, DateTime
+from api.database.connection import Base
+from pydantic import BaseModel
+from datetime import datetime
+
+
+# SQLAlchemy ORM model
+class Documents(Base):
+    __tablename__ = "documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    url = Column(String, unique=True)
+    status = Column(String)
+    notes = Column(String)
+    download_path = Column(String)
+    downloaded_at = Column(DateTime, default=datetime.utcnow)
+    keywords_namefile = Column(String)
+
+
+# Pydantic model for request/response validation
+
+
+class DocumentsResponse(BaseModel):
+    id: int
+    url: str
+    status: str
+    notes: str
+    download_path: str
+    downloaded_at: datetime
+    keywords_namefile: str
 
 
 === Content of /home/sam/github/data-fastapi/api/database/connection.py ===
 
-from sqlmodel import create_engine, SQLModel, Session
-from ..config.settings import settings
-from api.models.docs_pdf import PdfDownload
-from api.models.user import User
-from api.config.logger_config import logger
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from contextlib import contextmanager
+from api.config.settings import settings
 
+# Define the base class for your models
+Base = declarative_base()
+
+# Create the SQLAlchemy engine
 engine = create_engine(settings.sqlalchemy_database_url, echo=False)
 
-
-def conn():
-    SQLModel.metadata.create_all(engine)
-
-
-def get_session():
-    with Session(engine) as session:
-        yield session
+# Create a configured "Session" class
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-if __name__ == "__main__":
-    conn()
+# Function to create all tables
+def init_db():
+    import api.models  # Import all the modules that define your SQLAlchemy models
+
+    Base.metadata.create_all(bind=engine)
+
+
+# Dependency to get a database session
+@contextmanager
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -1,18 +1,25 @@
-from sqlmodel import SQLModel, Field
+from sqlalchemy import Column, Integer, String
+from api.database.connection import Base
+from pydantic import BaseModel, EmailStr
 import uuid
 
 
-class User(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    email: str
-    password: str
-    token: str = Field(default_factory=lambda: str(uuid.uuid4()))
+# SQLAlchemy model
+class User(Base):
+    __tablename__ = "users"
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "email": "test@gmail.com",
-                "username": "strong!!!",
-                "events": [],
-            }
-        }
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    password = Column(String)
+    token = Column(String, default=lambda: str(uuid.uuid4()))
+
+
+# Pydantic model
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class UserResponse(BaseModel):
+    email: EmailStr
+    token: str

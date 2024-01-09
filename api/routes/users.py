@@ -1,46 +1,46 @@
-from fastapi import APIRouter, HTTPException, status, Depends
-from sqlmodel import Session, select
-from api.models.user import User
-from api.database.connection import get_session
+from fastapi import APIRouter, HTTPException, Depends, status
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+from api.models.user import User, UserCreate, UserResponse
+from api.database.connection import get_db
 import uuid
 
 user_router = APIRouter(tags=["User"])
-users = {}
 
 
-@user_router.post("/signup")
-async def sign_new_user(data: User, session: Session = Depends(get_session)) -> dict:
-    # Check if the user already exists in the database
-    existing_user = session.exec(select(User).where(User.email == data.email)).first()
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="User with supplied email already exists",
+@user_router.post("/signup", response_model=UserResponse)
+async def sign_new_user(user_data: UserCreate, db: Session = Depends(get_db)):
+    with db as session:
+        existing_user = session.execute(
+            select(User).where(User.email == user_data.email)
+        ).scalar()
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="User with supplied email already exists",
+            )
+
+        new_user = User(
+            email=user_data.email, password=user_data.password, token=str(uuid.uuid4())
         )
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
 
-    # Generate a unique token for the new user
-    data.token = str(uuid.uuid4())
-
-    # Add new user to the database
-    session.add(data)
-    session.commit()
-    session.refresh(data)
-    return {"message": "User successfully registered!"}
+    return UserResponse(email=new_user.email, token=new_user.token)
 
 
-@user_router.post("/signin")
+@user_router.post("/signin", response_model=UserResponse)
 async def sign_user_in(
-    email: str, password: str, session: Session = Depends(get_session)
-) -> dict:
-    user = session.exec(select(User).where(User.email == email)).first()
+    email: str, password: str, db: Session = Depends(get_db)
+) -> UserResponse:
+    user = db.execute(select(User).where(User.email == email)).scalar()
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
     if user.password != password:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect password",
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password"
         )
-    return {"message": "User successfully signed in!", "token": user.token}
+    return UserResponse(email=user.email, token=user.token)
