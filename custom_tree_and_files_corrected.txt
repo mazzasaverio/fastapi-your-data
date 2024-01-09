@@ -62,12 +62,21 @@
 │   ├── esg_spider_2024-01-09_20-06-10_615812.log
 │   ├── esg_spider_2024-01-09_20-08-07_699583.log
 │   ├── esg_spider_2024-01-09_20-08-59_985006.log
-│   └── esg_spider_2024-01-09_20-16-43_909620.log
+│   ├── esg_spider_2024-01-09_20-16-43_909620.log
+│   ├── esg_spider_2024-01-09_20-26-06_757436.log
+│   ├── esg_spider_2024-01-09_20-26-42_179388.log
+│   ├── esg_spider_2024-01-09_20-40-56_108940.log
+│   ├── esg_spider_2024-01-09_20-41-48_912934.log
+│   ├── esg_spider_2024-01-09_20-46-49_247704.log
+│   ├── esg_spider_2024-01-09_20-49-44_996025.log
+│   ├── esg_spider_2024-01-09_20-53-35_407252.log
+│   ├── esg_spider_2024-01-09_20-54-18_360731.log
+│   └── esg_spider_2024-01-09_20-54-53_637685.log
 ├── README.md
 ├── requirements.txt
 └── tests
 
-8 directories, 60 files
+8 directories, 69 files
 
 
 === Content of /home/sam/github/data-fastapi/code_report.py ===
@@ -223,22 +232,10 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from sqlmodel import Session, select
 from api.models.user import User
 from api.database.connection import get_session
+import uuid
 
 user_router = APIRouter(tags=["User"])
 users = {}
-
-
-@user_router.post("/signup")
-async def sign_new_user(
-    data: User,
-) -> dict:
-    if data.email in users:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="User with supplied username  exists",
-        )
-    users[data.email] = data
-    return {"message": "User successfully registered!"}
 
 
 @user_router.post("/signup")
@@ -251,6 +248,9 @@ async def sign_new_user(data: User, session: Session = Depends(get_session)) -> 
             detail="User with supplied email already exists",
         )
 
+    # Generate a unique token for the new user
+    data.token = str(uuid.uuid4())
+
     # Add new user to the database
     session.add(data)
     session.commit()
@@ -258,23 +258,68 @@ async def sign_new_user(data: User, session: Session = Depends(get_session)) -> 
     return {"message": "User successfully registered!"}
 
 
+@user_router.post("/signin")
+async def sign_user_in(
+    email: str, password: str, session: Session = Depends(get_session)
+) -> dict:
+    user = session.exec(select(User).where(User.email == email)).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+    if user.password != password:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password",
+        )
+    return {"message": "User successfully signed in!", "token": user.token}
+
+
 === Content of /home/sam/github/data-fastapi/api/routes/pdf_downloaded.py ===
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
-from api.models.docs_pdf import PdfDownload
-from api.database.connection import get_session
+from fastapi import APIRouter, Depends, HTTPException, status, Security
+from fastapi.security import APIKeyHeader
+from sqlmodel import Session, select
 from typing import List
-from sqlmodel import select
+from api.models.docs_pdf import PdfDownload
+from api.models.user import User
+from api.database.connection import get_session
 from api.config.logger_config import logger
 
+# Router setup for documents
 docs_router = APIRouter(tags=["Docs"])
 
+# Header for token authentication
+api_key_header = APIKeyHeader(name="Token", auto_error=False)
 
+
+# Dependency to get the current user based on the token
+async def get_current_user(
+    token: str = Security(api_key_header), session: Session = Depends(get_session)
+):
+    if token is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="No token provided"
+        )
+
+    user = session.exec(select(User).where(User.token == token)).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
+
+    return user
+
+
+# Endpoint to retrieve all documents, accessible only with valid token
 @docs_router.get("/", response_model=List[PdfDownload])
-async def retrieve_all_events(session=Depends(get_session)) -> List[PdfDownload]:
+async def retrieve_all_records(
+    user: User = Depends(get_current_user), session: Session = Depends(get_session)
+) -> List[PdfDownload]:
     statement = select(PdfDownload)
     events = session.exec(statement).all()
-    logger.info(f"###### Retrieved {len(events)} events")
+    logger.info(f"Retrieved {len(events)} records from the database")
     return events
 
 
@@ -297,12 +342,14 @@ class PdfDownload(SQLModel, table=True):
 === Content of /home/sam/github/data-fastapi/api/models/user.py ===
 
 from sqlmodel import SQLModel, Field
+import uuid
 
 
 class User(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     email: str
     password: str
+    token: str = Field(default_factory=lambda: str(uuid.uuid4()))
 
     class Config:
         schema_extra = {

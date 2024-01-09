@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from sqlmodel import Session, select
 from api.models.user import User
 from api.database.connection import get_session
+import uuid
 
 user_router = APIRouter(tags=["User"])
 users = {}
@@ -17,6 +18,9 @@ async def sign_new_user(data: User, session: Session = Depends(get_session)) -> 
             detail="User with supplied email already exists",
         )
 
+    # Generate a unique token for the new user
+    data.token = str(uuid.uuid4())
+
     # Add new user to the database
     session.add(data)
     session.commit()
@@ -25,14 +29,18 @@ async def sign_new_user(data: User, session: Session = Depends(get_session)) -> 
 
 
 @user_router.post("/signin")
-async def sign_user_in(user: User) -> dict:
-    if users[user.email] not in users:
+async def sign_user_in(
+    email: str, password: str, session: Session = Depends(get_session)
+) -> dict:
+    user = session.exec(select(User).where(User.email == email)).first()
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="User with supplied username does not exist",
+            detail="User not found",
         )
-    if users[user.email].password != user.password:
+    if user.password != password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect password",
         )
+    return {"message": "User successfully signed in!", "token": user.token}
