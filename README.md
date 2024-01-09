@@ -1,83 +1,49 @@
-# Data-FastAPI
+# DATA-FASTAPI
 
 ## Overview
 
-`data-fastapi` is a comprehensive API designed for selling datasets. It supports various data types, both structured and unstructured, and offers modular, scalable access to data via an API key authentication system.
-
-## Features
-
-- Support for multiple databases: MongoDB, PostgreSQL, Redis, and a Data Lakehouse.
-- Local and cloud deployment options for cost-effective development and scalability.
-- API key authentication for secure and controlled data access.
-- Modular structure for easy maintenance and scalability.
+This repository contains the foundational code for a FastAPI application that connects to a SQL database using SQLModel. The goal is to deploy this API on Google Cloud Platform (GCP) and utilize Cloud SQL as the database service. It is designed to expose data securely through tokens issued to users.
 
 ## Getting Started
 
-aggiungi il tree della repo con la spiegazione di cosa rappresenta ogni cartella e file
-
-### Prerequisites
-
-- Docker
-- Python 3.8+
-- Terraform (for cloud deployment)
-
 ### Installation
 
-Clone the repository:
+1. Clone the repository:
 
-```
-git clone https://github.com/yourusername/data-fastapi.git
-```
+   ```bash
+   git clone https://github.com/yourusername/your-repo-name.git
+   ```
 
-Install dependencies:
+2. Navigate to the project directory:
 
-```
-pip install -r requirements.txt
-```
+   ```bash
+   cd your-repo-name
+   ```
 
-### Setting Up Local Environment
+3. Install required dependencies:
 
-Copy `.env.sample` to create a `.env` file and adjust the variables to suit your local environment.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Run the Docker containers for databases:
+### Local Development
 
-```
-docker-compose up -d
-```
+1. Start your local development server:
 
-### Running the Application
+   ```bash
+   uvicorn main:app --reload
+   ```
 
-Start the FastAPI application:
+2. Access the API at `http://localhost:8000`.
 
-```
-uvicorn app.main:app --reload
-```
+### Database Configuration
 
-## API Documentation
-
-Access the API documentation at `http://localhost:8000/docs`.
-
-## Testing
-
-Run tests using:
-
-```
-pytest
-```
-
-## Deployment
-
-Refer to the `terraform/` directory for cloud deployment and `docker/` for containerization details.
+- Configure your local and Cloud SQL database credentials in the `.env` file.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome!
+Contributions to this project are welcome. Please fork the repository and submit a pull request for any enhancements.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-
-Your Name - your@email.com
-Project Link: https://github.com/yourusername/data-fastapi
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
