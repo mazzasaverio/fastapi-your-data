@@ -1,11 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime
-from api.database.connection import Base
-from pydantic import BaseModel
+from app.database.sqlalchemy_connection import Base
 from datetime import datetime
-from typing import Optional
 
 
-# SQLAlchemy ORM model
 class Documents(Base):
     __tablename__ = "documents"
 
@@ -16,16 +13,3 @@ class Documents(Base):
     download_path = Column(String)
     downloaded_at = Column(DateTime, default=datetime.utcnow)
     keywords_namefile = Column(String)
-
-
-# Pydantic model for request/response validation
-
-
-class DocumentsResponse(BaseModel):
-    id: int
-    url: str
-    status: str
-    notes: Optional[str]  # Allow None values
-    download_path: str
-    downloaded_at: datetime
-    keywords_namefile: str
