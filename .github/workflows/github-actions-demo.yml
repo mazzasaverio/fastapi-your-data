@@ -24,22 +24,22 @@ jobs:
           push: true
           tags: inter92/fastapi-service:latest
 
-      - name: Deploy to GCE
-        run: |
-          mkdir -p ~/.ssh
-          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      # - name: Deploy to GCE
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
 
-          eval "$(ssh-agent -s)" # Start the ssh-agent
-          ssh-add ~/.ssh/id_rsa # Add your private key to the agent
+      #     eval "$(ssh-agent -s)" # Start the ssh-agent
+      #     ssh-add ~/.ssh/id_rsa # Add your private key to the agent
 
-          ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${GCE_USER}@${GCE_HOST} << 'ENDSSH'
-          docker pull ***/fastapi-service:latest
-          docker stop my-running-app || true
-          docker rm my-running-app || true
-          docker run -d --name my-running-app ***/fastapi-service:latest
-          ENDSSH
-        env:
-          GCE_USER: ${{ secrets.GCE_USER }}
-          GCE_HOST: ${{ secrets.GCE_HOST }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${GCE_USER}@${GCE_HOST} << 'ENDSSH'
+      #     docker pull ***/fastapi-service:latest
+      #     docker stop my-running-app || true
+      #     docker rm my-running-app || true
+      #     docker run -d --name my-running-app ***/fastapi-service:latest
+      #     ENDSSH
+      #   env:
+      #     GCE_USER: ${{ secrets.GCE_USER }}
+      #     GCE_HOST: ${{ secrets.GCE_HOST }}
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
