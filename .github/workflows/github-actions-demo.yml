@@ -24,7 +24,7 @@ jobs:
           push: true
           tags: inter92/fastapi-service:latest
 
-      - name: Deploy to GCE
+      - name: Deploy to GCE.
         run: |
           ssh -o StrictHostKeyChecking=no ${GCE_USER}@${GCE_HOST} << 'ENDSSH'
           docker pull inter92/fastapi-service:latest
