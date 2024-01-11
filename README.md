@@ -1,57 +1,30 @@
 # FastAPI Your Data
 
-## Overview
+## Introduction
 
-This repository contains a modular and scalable backend application template using FastAPI and SQLAlchemy, focusing on data access by various users. Currently, the additional service layer is not considered, and operations are managed directly in the routes.
+This project aims to serve as a template for developing a FastAPI backend. It is designed for experimenting with various aspects such as costs, functionality, and performance. The ultimate goal is to facilitate the creation of a customizable backend setup that can be efficiently deployed on the cloud, allowing for scalable and modular development, and enabling the exposure of datasets.
 
-## Features
+## Current Progress
 
-- **FastAPI Framework:** Building independent sub-applications within the main application.
-- **SQLAlchemy for Database Management:** Effective handling of CRUD operations with SQLAlchemy.
-- **Repository-Service Pattern:** Utilization of repository-service pattern for a structured approach to CRUD operations.
+- **Database Connection**: Initiated with a basic connection to a PostgreSQL database utilizing SQLAlchemy's ORM.
+- **Design Philosophy**: The design I am adopting involves having a structure where the app will be supplemented with other independent modules. These modules will be managed and mounted by a main.py in the root, which, through an API gateway, will redirect various calls.
+- **Data Module Focus**: Presently concentrating on a single module, which will correspond to a specific family or category of data. Each data category will have its own dedicated database with a unique table structure.
+- **Architecture**: The design includes a models layer and a repository layer for database interactions. The API layer, with its various routes, forms the final layer of the architecture.
 
-## Project Structure
+## Technical Setup
 
-The project is organized into several directories, each serving a specific purpose:
+- **CI/CD Integration**: Implemented a GitHub Actions workflow to prepare the deployment image.
+- **Cloud Infrastructure**: Utilizing a Google Cloud Engine (GCE) instance and Cloud SQL for pipeline testing.
 
-- `app`: Main application directory containing subdirectories for API routes, core functionalities, database configurations, repositories, schemas, and utilities.
-- `config`: Contains configuration settings.
-- `logs`: Log files are stored here.
-- `Dockerfile` and `docker-compose.yml`: For containerization of the application.
-- `requirements.txt`: Lists all the Python dependencies.
+## Additional Resources
 
-## Setting Up
+- For those interested in the infrastructure aspect, the Terraform code for various services being used in this project can be found here: [Terraform GCP Repository](https://github.com/mazzasaverio/terraform-gcp)
 
-To set up the project, follow these steps:
+## Future Objectives
 
-1. Install dependencies using `pip install -r requirements.txt`.
-2. Set up the database using the provided scripts in the `app/database` directory.
-3. Configure the `.env` file with the necessary environment variables.
+- Transition to asynchronous interactions with the database.
+- Integration of a frontend using Next.js.
 
-## Running the Application
+## Contributing
 
-Launch the application using the following command:
-
-```
-uvicorn app.main:app --reload
-```
-
-## API Endpoints
-
-The application provides several API endpoints under `/documents` and `/user` for handling documents and user-related operations, respectively.
-
-## Security
-
-The application uses hashed passwords for user authentication, ensuring enhanced security.
-
-## Logging
-
-Utilizes `loguru` for efficient logging throughout the application.
-
-## License
-
-This project is licensed under the terms of the [LICENSE](LICENSE) file.
-
-## Contribution
-
-Contributions are welcome. Please fork the repository and submit a pull request with your changes.
+Contributions to the project are welcome! Feel free to open an issue or submit a pull request.
