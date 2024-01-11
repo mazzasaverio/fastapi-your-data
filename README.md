@@ -1,7 +1,5 @@
 # FastAPI Your Data
 
-## Introduction
-
 This project aims to serve as a template for developing a FastAPI backend. It is designed for experimenting with various aspects such as costs, functionality, and performance. The ultimate goal is to facilitate the creation of a customizable backend setup that can be efficiently deployed on the cloud, allowing for scalable and modular development, and enabling the exposure of datasets.
 
 ## Current Progress
@@ -23,7 +21,7 @@ This project aims to serve as a template for developing a FastAPI backend. It is
 ## Future Objectives
 
 - Transition to asynchronous interactions with the database.
-- Integration of a frontend using Next.js.
+- Connect a frontend in Next.js.
 
 ## Contributing
 
