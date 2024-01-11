@@ -24,16 +24,12 @@ jobs:
           push: true
           tags: inter92/fastapi-service:latest
 
-      - name: Deploy to GCE
+      - name: Deploy to GCE.
         run: |
-          mkdir -p ~/.ssh
-          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-add ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${GCE_USER}@${GCE_HOST} << 'ENDSSH'
+          ssh -o StrictHostKeyChecking=no ${GCE_USER}@${GCE_HOST} << 'ENDSSH'
           docker pull inter92/fastapi-service:latest
-          docker stop my-running-app || true
-          docker rm my-running-app || true
+          docker stop my-running-app
+          docker rm my-running-app
           docker run -d --name my-running-app inter92/fastapi-service:latest
           ENDSSH
         env:
