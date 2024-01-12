@@ -18,6 +18,16 @@ app = FastAPI()
 app.include_router(docs_router, prefix="/documents")
 app.include_router(user_router, prefix="/user")
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Specify domains if you want to restrict
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/metrics")
 def metrics():
