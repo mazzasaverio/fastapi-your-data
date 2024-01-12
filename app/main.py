@@ -39,6 +39,11 @@ async def home():
     return RedirectResponse(url="/docs")
 
 
+@app.get("/hello")
+async def hello():
+    return {"message": "Ciao"}
+
+
 logger.remove()
 logger.add(
     sys.stdout,
