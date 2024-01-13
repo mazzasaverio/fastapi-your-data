@@ -4,6 +4,7 @@ from loguru import logger
 
 from app.api.routes.documents import docs_router
 from app.api.routes.users import user_router
+from app.api.routes.authentication import auth_router
 
 from fastapi import FastAPI, Request
 from loguru import logger
@@ -17,6 +18,7 @@ app = FastAPI()
 
 app.include_router(docs_router, prefix="/documents")
 app.include_router(user_router, prefix="/user")
+app.include_router(auth_router, prefix="/auth")
 
 from fastapi.middleware.cors import CORSMiddleware
 
