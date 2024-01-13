@@ -1,35 +1,15 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from jose import jwt, JWTError
-from config import settings
-import httpx
+from fastapi import Security, HTTPException, status
+from fastapi.security.api_key import APIKeyHeader
+from config.settings import settings
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
+API_KEY_NAME = "access_token"  # Updated to match the documentation
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 
 
-def decode_keycloak_token(token: str):
-    try:
-        payload = jwt.decode(
-            token, settings.KEYCLOAK_SECRET, algorithms=[settings.JWT_ALGORITHM]
-        )
-        return payload
-    except JWTError:
+async def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header == settings.API_KEY:  # Validate against the loaded API key
+        return api_key_header
+    else:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
+            status_code=status.HTTP_403_FORBIDDEN, detail="Could not validate API key"
         )
-
-
-def get_current_user(token: str = Depends(oauth2_scheme)):
-    payload = decode_keycloak_token(token)
-    username: str = payload.get("preferred_username")
-    if username is None:
-        raise HTTPException(status_code=400, detail="Invalid JWT token")
-    user_roles: list = payload.get("roles", [])
-    # Additional logic to handle user roles can be implemented here
-    return {"username": username, "roles": user_roles}
-
-
-def is_user_authorized(roles: list, required_roles: set):
-    return set(roles).intersection(required_roles)

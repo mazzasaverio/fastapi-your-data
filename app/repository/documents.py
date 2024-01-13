@@ -9,7 +9,7 @@ class DocumentsRepository:
 
     def get_all_documents(self):
         try:
-            documents = self.db.query(Documents).all()
+            documents = self.db.query(Documents).limit(5).all()
             return documents
         except Exception as e:
             logger.error(f"Error fetching documents: {e}")

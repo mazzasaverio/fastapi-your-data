@@ -1,27 +1,18 @@
-from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi import FastAPI, Request, Depends
+from fastapi.responses import RedirectResponse, JSONResponse
 from loguru import logger
-
-from app.api.routes.documents import docs_router
-from app.api.routes.users import user_router
-from app.api.routes.authentication import auth_router
-
-from fastapi import FastAPI, Request
-from loguru import logger
-from uuid import uuid4
 import sys
-from fastapi.responses import JSONResponse
+from uuid import uuid4
 import uvicorn
-
+from app.api.routes.documents import docs_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# Include routers
 app.include_router(docs_router, prefix="/documents")
-app.include_router(user_router, prefix="/user")
-app.include_router(auth_router, prefix="/auth")
 
-from fastapi.middleware.cors import CORSMiddleware
-
+# CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Specify domains if you want to restrict
@@ -31,21 +22,25 @@ app.add_middleware(
 )
 
 
+# Metrics endpoint
 @app.get("/metrics")
 def metrics():
     return {"message": "This is a dummy metrics endpoint."}
 
 
+# Root endpoint
 @app.get("/")
 async def home():
     return RedirectResponse(url="/docs")
 
 
+# Simple hello endpoint
 @app.get("/hello")
 async def hello():
     return {"message": "Ciao"}
 
 
+# Logger configuration
 logger.remove()
 logger.add(
     sys.stdout,
@@ -61,6 +56,7 @@ logger.add(
 )
 
 
+# Request logging middleware
 @app.middleware("http")
 async def log_middleware(request: Request, call_next):
     log_id = str(uuid4())
@@ -77,4 +73,4 @@ async def log_middleware(request: Request, call_next):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app_main:app", host="0.0.0.0", port=8080, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8080, reload=True)
