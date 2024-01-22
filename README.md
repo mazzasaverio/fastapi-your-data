@@ -9,19 +9,26 @@ This project aims to serve as a template for developing a FastAPI backend. It is
 - **Data Module Focus**: Presently concentrating on a single module, which will correspond to a specific family or category of data. Each data category will have its own dedicated database with a unique table structure.
 - **Architecture**: The design includes a models layer and a repository layer for database interactions. The API layer, with its various routes, forms the final layer of the architecture.
 
-## Technical Setup
+## Set environment variables
 
-- **CI/CD Integration**: Implemented a GitHub Actions workflow to prepare the deployment image.
-- **Cloud Infrastructure**: Utilizing a Google Cloud Engine (GCE) instance and Cloud SQL for pipeline testing.
+Create an **.env** file on root folder and copy the content from **.env.example**. Feel free to change it according to your own configuration.
+
+## Alembic migrations
+
+## Inspiration and References
+
+- [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async).
+
+## TODO List:
+
+- [x] Transition to asynchronous interactions with the database.
+- [x] Connect a frontend in Next.js.
+
+## TODO Ideas to test:
 
 ## Additional Resources
 
 - For those interested in the infrastructure aspect, the Terraform code for various services being used in this project can be found here: [Terraform GCP Repository](https://github.com/mazzasaverio/terraform-gcp)
-
-## Future Objectives
-
-- Transition to asynchronous interactions with the database.
-- Connect a frontend in Next.js.
 
 ## Contributing
 
