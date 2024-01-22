@@ -1,6 +1,6 @@
 # init_db.py
-from app.database.sqlalchemy_connection import engine, Base
-from app.database.models.documents import Documents
+from backend.app.app.database.session import engine, Base
+from backend.app.app.models.documents import Documents
 from loguru import logger
 
 

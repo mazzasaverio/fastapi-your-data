@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from app.database.sqlalchemy_connection import SessionFactory
-from app.repository.documents import DocumentsRepository
-from app.schemas.documents import DocumentsResponse
-from app.core.security import get_api_key
+from backend.app.app.database.session import SessionFactory
+from backend.app.app.repository.documents import DocumentsRepository
+from backend.app.app.schemas.documents import DocumentsResponse
+from backend.app.app.core.security import get_api_key
 from loguru import logger
 
 docs_router = APIRouter()
