@@ -4,7 +4,7 @@ custom_tree_and_files_corrected.txt
 custom_tree_and_files_corrected.txt
 # Alembic stuff
 alembic.ini
-
+.env
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
