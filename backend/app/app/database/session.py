@@ -1,14 +1,14 @@
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from contextlib import contextmanager
 from backend.app.app.core.config import settings
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import sessionmaker
 
 # Define the base class for your models
 Base = declarative_base()
 
-# Create the SQLAlchemy engine
-engine = create_engine(settings.sqlalchemy_database_url, echo=False)
+# Reusing the AsyncEngine instance
+engine = create_async_engine(settings.sqlalchemy_database_url, future=True, echo=True)
 
-# Create a configured "SessionFactory" class
-SessionFactory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Creating an async session factory
+AsyncSessionFactory = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)

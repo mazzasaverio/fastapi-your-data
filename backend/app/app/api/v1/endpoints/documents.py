@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from backend.app.app.database.session import SessionFactory
+from backend.app.app.database.session import AsyncSessionFactory
 from backend.app.app.repository.documents import DocumentsRepository
 from backend.app.app.schemas.documents import DocumentsResponse
 from backend.app.app.core.security import get_api_key
@@ -11,7 +11,7 @@ docs_router = APIRouter()
 
 
 def sess_db():
-    db = SessionFactory()
+    db = AsyncSessionFactory()
     try:
         yield db
     finally:
