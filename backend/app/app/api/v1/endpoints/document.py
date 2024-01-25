@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from app.database.session import AsyncSessionFactory
-from app.repository.documents import DocumentsRepository
-from app.schemas.documents import DocumentsResponse
+from backend.app.app.crud.document_crud import DocumentsRepository
+from backend.app.app.schemas.document_schema import DocumentsResponse
 from app.core.security import get_api_key
 from loguru import logger
 

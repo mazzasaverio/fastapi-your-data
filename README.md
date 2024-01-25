@@ -30,6 +30,10 @@ Create an **.env** file on root folder and copy the content from **.env.example*
 
 - For those interested in the infrastructure aspect, the Terraform code for various services being used in this project can be found here: [Terraform GCP Repository](https://github.com/mazzasaverio/terraform-gcp)
 
+## Interessanti, da rivedere
+
+- [video-2-text](https://github.com/XamHans/video-2-text?tab=readme-ov-file)
+
 ## Contributing
 
 Contributions to the project are welcome! Feel free to open an issue or submit a pull request.

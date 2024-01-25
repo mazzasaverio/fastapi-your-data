@@ -4,13 +4,16 @@ from loguru import logger
 import sys
 from uuid import uuid4
 import uvicorn
-from app.api.v1.endpoints.documents import docs_router
+from backend.app.app.api.v1.endpoints.document import docs_router
+from backend.app.app.api.v1.endpoints.company import company_router
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 # Include routers
 app.include_router(docs_router, prefix="/documents")
+app.include_router(company_router, prefix="/companies")
 
 # CORS middleware configuration
 app.add_middleware(
