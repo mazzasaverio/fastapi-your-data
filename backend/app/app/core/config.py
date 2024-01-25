@@ -14,11 +14,8 @@ class Settings(BaseSettings):
     DB_PASS: str = os.getenv("DB_PASS")
     DB_USER: str = os.getenv("DB_USER")
 
-    API_KEY: str = os.getenv("API_KEY")  # Add this line to load API_KEY from .env file
+    API_KEY: str = os.getenv("API_KEY")
 
-    @property
-    def sqlalchemy_database_url(self) -> str:
-        return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
-
-
-settings = Settings()
+    ASYNC_DATABASE_URI: str = (
+        f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    )

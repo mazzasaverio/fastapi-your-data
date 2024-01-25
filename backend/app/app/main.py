@@ -4,7 +4,7 @@ from loguru import logger
 import sys
 from uuid import uuid4
 import uvicorn
-from backend.app.app.api.v1.endpoints.documents import docs_router
+from app.api.v1.endpoints.documents import docs_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from backend.app.app.models.documents import Documents
+from app.models.document_model import Documents
 from loguru import logger
 
 

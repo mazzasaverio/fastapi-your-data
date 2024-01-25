@@ -1,6 +1,6 @@
 from fastapi import Security, HTTPException, status
 from fastapi.security.api_key import APIKeyHeader
-from backend.app.app.core.config import settings
+from app.core.config import settings
 
 API_KEY_NAME = "access_token"  # Updated to match the documentation
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
