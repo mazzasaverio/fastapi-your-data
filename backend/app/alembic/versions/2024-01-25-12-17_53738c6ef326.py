@@ -1,8 +1,8 @@
-"""descrizione della revisione
+"""Create tables
 
-Revision ID: 8a3e4b8f3672
+Revision ID: 53738c6ef326
 Revises: 
-Create Date: 2024-01-25 11:47:45.602366
+Create Date: 2024-01-25 12:17:17.675735
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel # added
 
 
 # revision identifiers, used by Alembic.
-revision = '8a3e4b8f3672'
+revision = '53738c6ef326'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,7 @@ def upgrade():
     sa.Column('type', sa.String(), nullable=True),
     sa.Column('sector', sa.String(), nullable=True),
     sa.Column('headquarters', sa.String(), nullable=True),
+    sa.Column('founded', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_companies_id'), 'companies', ['id'], unique=False)

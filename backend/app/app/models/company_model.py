@@ -13,3 +13,4 @@ class Company(Base):
     sector = Column(String)
     headquarters = Column(String)
     founded = Column(String)
+    notes = Column(String)

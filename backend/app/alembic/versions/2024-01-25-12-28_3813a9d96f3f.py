@@ -1,18 +1,17 @@
-"""add column test
+"""Edit columns companies
 
-Revision ID: ba9eb54fed62
-Revises: 8a3e4b8f3672
-Create Date: 2024-01-25 12:04:42.863847
+Revision ID: 3813a9d96f3f
+Revises: 398523055948
+Create Date: 2024-01-25 12:28:08.608515
 
 """
 from alembic import op
 import sqlalchemy as sa
-import sqlmodel # added
 
 
 # revision identifiers, used by Alembic.
-revision = 'ba9eb54fed62'
-down_revision = '8a3e4b8f3672'
+revision = '3813a9d96f3f'
+down_revision = '398523055948'
 branch_labels = None
 depends_on = None
 
