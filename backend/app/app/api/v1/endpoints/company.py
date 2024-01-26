@@ -1,33 +1,38 @@
-# backend/app/app/api/v1/endpoints/company.py
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException, Depends, Body
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.crud.base_crud import BaseCRUD
+from app.models.company_model import Company
+from app.schemas.company_schema import CompanyCreate, CompanyResponse
 from app.database.session import AsyncSessionFactory
-from app.crud.company_crud import CompanyCRUD
-from app.schemas.company_schema import CompanyResponse
-from app.core.security import get_api_key
+from loguru import logger
 
-company_router = APIRouter()
+router = APIRouter()
 
 
-def sess_db():
-    db = AsyncSessionFactory()
-    try:
-        yield db
-    finally:
-        db.close()
+# Dependency for database session
+async def get_db_session():
+    async with AsyncSessionFactory() as session:
+        yield session
 
 
-@company_router.post("/", response_model=CompanyResponse)
-async def add_company(
-    company_create: CompanyResponse, sess: Session = Depends(sess_db)
+@router.post("/", response_model=CompanyResponse)
+async def create_company(
+    company: CompanyCreate, db: AsyncSession = Depends(get_db_session)
 ):
-    company_crud = CompanyCRUD(sess)
-    return company_crud.create_company(company_create)
+    crud = BaseCRUD(Company)
+    new_company = await crud.create_record(db, company)
+    return new_company
 
 
-@company_router.delete("/{company_id}")
-async def remove_company(company_id: int, sess: Session = Depends(sess_db)):
-    company_crud = CompanyCRUD(sess)
-    if not company_crud.delete_company(company_id):
-        raise HTTPException(status_code=404, detail="Company not found")
-    return {"message": "Company deleted successfully"}
+@router.delete("/{company_id}")
+async def delete_company(company_id: int, db: AsyncSession = Depends(get_db_session)):
+    crud = BaseCRUD(Company)
+    await crud.delete_record(db, id=company_id)
+    return {"status": "success", "message": "Company deleted"}
+
+
+@router.get("/", response_model=list[CompanyResponse])
+async def get_companies(db: AsyncSession = Depends(get_db_session)):
+    crud = BaseCRUD(Company)
+    companies = await crud.get_multi(db)
+    return companies["data"]
