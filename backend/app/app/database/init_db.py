@@ -1,6 +1,6 @@
 # init_db.py
-from backend.app.database.session import engine, Base
-from backend.app.models.document_model import Documents
+from app.database.session import engine, Base
+from app.models.document_model import Documents
 from loguru import logger
 
 

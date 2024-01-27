@@ -6,7 +6,7 @@ from uuid import uuid4
 import uvicorn
 
 # from backend.app.api.v1.endpoints.document import docs_router
-from backend.app.api.v1.endpoints.company import router as company_router
+from app.api.v1.endpoints.company import router as company_router
 
 from fastapi.middleware.cors import CORSMiddleware
 

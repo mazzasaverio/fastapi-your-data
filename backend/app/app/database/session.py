@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from backend.app.core.config import Settings
+from app.core.config import Settings
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
