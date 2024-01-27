@@ -18,6 +18,7 @@ Create an **.env** file on root folder and copy the content from **.env.example*
 ## Inspiration and References
 
 - [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async).
+- [fastcrud](https://github.com/igorbenav/fastcrud)
 
 ## TODO List:
 
@@ -30,9 +31,10 @@ Create an **.env** file on root folder and copy the content from **.env.example*
 
 - For those interested in the infrastructure aspect, the Terraform code for various services being used in this project can be found here: [Terraform GCP Repository](https://github.com/mazzasaverio/terraform-gcp)
 
-## Interessanti, da rivedere
+## Interesting, to be reviewed
 
 - [video-2-text](https://github.com/XamHans/video-2-text?tab=readme-ov-file)
+- [instagraph-nextjs-fastapi](https://github.com/waseemhnyc/instagraph-nextjs-fastapi)
 
 ## Contributing
 
