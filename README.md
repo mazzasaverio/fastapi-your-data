@@ -20,6 +20,8 @@ Create an **.env** file on root folder and copy the content from **.env.example*
 - [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async).
 - [fastcrud](https://github.com/igorbenav/fastcrud)
 
+- (https://github.com/FrancescoXX/fullstack-flask-app)
+
 ## TODO List:
 
 - [x] Transition to asynchronous interactions with the database.

@@ -103,6 +103,13 @@ class BaseCRUD(
         await db.execute(stmt)
         await db.commit()
 
+    async def get(self, db: AsyncSession, id: int) -> Optional[ModelType]:
+        """
+        Fetch a single record by id.
+        """
+        result = await db.execute(select(self.model).filter(self.model.id == id))
+        return result.scalars().first()
+
     async def get_multi(
         self,
         db: AsyncSession,
