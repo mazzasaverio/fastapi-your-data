@@ -1,26 +1,42 @@
-name: CI/CD Pipeline
+# Read more about setting it up
+# https://medium.com/@ljmocic/deploying-react-application-to-aws-s3-using-github-actions-85addacaeace
 
+name: fastapi-your-data
 on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+
   push:
     branches: [master]
+    tags:
+      - "v*"
+  #pull_request:
+  #  branches: [ master ]
 
 jobs:
-  build-and-deploy:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+      - name: Check out the repo
+        uses: actions/checkout@v3
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: inter92/fastapi-service
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ./backend
           push: true
-          tags: inter92/fastapi-service:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
