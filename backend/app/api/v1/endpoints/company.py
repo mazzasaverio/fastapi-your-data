@@ -1,9 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.crud.base_crud import BaseCRUD
-from app.models.company_model import Company
-from app.schemas.company_schema import CompanyCreate, CompanyResponse, CompanyUpdate
-from app.database.session import AsyncSessionFactory
+from backend.app.crud.base_crud import BaseCRUD
+from backend.app.models.company_model import Company
+from backend.app.schemas.company_schema import (
+    CompanyCreate,
+    CompanyResponse,
+    CompanyUpdate,
+)
+from backend.app.database.session import AsyncSessionFactory
 from loguru import logger
 
 router = APIRouter()

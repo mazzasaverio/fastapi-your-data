@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from app.database.session import Base
+from backend.app.database.session import Base
 
 
 class Company(Base):
