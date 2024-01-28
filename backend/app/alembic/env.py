@@ -1,10 +1,10 @@
 from alembic import context
 from sqlalchemy.ext.asyncio import create_async_engine
-from app.core.config import Settings
-from app.database.session import Base
+from app.app.core.config import Settings
+from app.app.database.session import Base
 
 # Models
-from app.models import company_model, document_model
+from app.app.models import company_model, document_model
 
 # Logging
 from logging.config import fileConfig
