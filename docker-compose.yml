@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend/app:/code
     expose:
-      - 8000
+      - "8000"
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}

@@ -1,10 +1,14 @@
 from alembic import context
 from sqlalchemy.ext.asyncio import create_async_engine
-from app.app.core.config import Settings
-from app.app.database.session import Base
+from app.core.config import Settings
+from app.database.session import Base
+import pathlib
+import sys
 
 # Models
-from app.app.models import company_model, document_model
+from app.models import company_model, document_model
+
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
 
 # Logging
 from logging.config import fileConfig
