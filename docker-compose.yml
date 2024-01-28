@@ -2,12 +2,12 @@ version: "3.8"
 
 services:
   fastapi_server:
-    build: ./backend/app
+    build: ./backend
     container_name: fastapi_server
     restart: always
     command: "sh -c 'gunicorn -w 3 -k uvicorn.workers.UvicornWorker app.main:app  --bind 0.0.0.0:8000 --preload --log-level=debug --timeout 120'"
     volumes:
-      - ./backend/app:/code
+      - ./backend/app:/code/app
     expose:
       - 8000
     environment:

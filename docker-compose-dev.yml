@@ -7,7 +7,7 @@ services:
     restart: always
     command: "sh -c 'uvicorn app.main:app --reload --workers 3 --host 0.0.0.0 --port 8000'"
     volumes:
-      - ./backend/app:/code
+      - ./backend/app:/code/app
     expose:
       - "8000"
     env_file:
