@@ -10,4 +10,10 @@ services:
       - ./backend/app:/code
     expose:
       - 8000
-    env_file: ".env"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_USER: ${DB_USER}
+      API_KEY: ${API_KEY}

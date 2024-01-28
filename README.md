@@ -13,14 +13,23 @@ This project aims to serve as a template for developing a FastAPI backend. It is
 
 Create an **.env** file on root folder and copy the content from **.env.example**. Feel free to change it according to your own configuration.
 
+## Se si vuole runnare il backend in dev locale
+
+docker-compose -f docker-compose-dev.yml up --build
+
+## Per eseguire l'immagine su un istanza per esempio una compute engine gcp
+
+docker login
+
+docker pull inter92/fastapi-service
+
 ## Alembic migrations
 
 ## Inspiration and References
 
 - [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async).
 - [fastcrud](https://github.com/igorbenav/fastcrud)
-
-- (https://github.com/FrancescoXX/fullstack-flask-app)
+- [fullstack-flask-app](https://github.com/FrancescoXX/fullstack-flask-app)
 
 ## TODO List:
 
