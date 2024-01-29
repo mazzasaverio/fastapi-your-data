@@ -10,6 +10,17 @@ from app.api.v1.endpoints.company import router as company_router
 
 from fastapi.middleware.cors import CORSMiddleware
 
+
+# Custom middleware for logging requests and responses
+class RequestResponseLoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        logger.info(f"Incoming request: {request.method} {request.url}")
+        response = await call_next(request)
+        logger.info(f"Response status: {response.status_code}")
+        return response
+
+
+# Create the FastAPI app
 app = FastAPI()
 
 # Include routers
@@ -23,6 +34,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add custom logging middleware
+app.add_middleware(RequestResponseLoggingMiddleware)
 
 
 # Metrics endpoint
@@ -52,6 +66,6 @@ logger.add(
     format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
 )
 
-
+# Running the application
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8080, reload=True)

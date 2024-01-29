@@ -52,7 +52,17 @@ docker-compose -f docker-compose-dev.yml up --build
 
 ## Alembic Migrations
 
-Documentation and details forthcoming.
+To automatically generate a migration script based on your model changes, run:
+
+alembic revision --autogenerate -m "Create tables"
+
+This command compares your database schema with your SQLAlchemy models and creates a migration script.
+
+To apply the generated migrations to your database, execute:
+
+alembic upgrade head
+This command runs the migration script(s) against your database, upgrading it to the latest version.
+
 
 ## Inspiration and References
 
