@@ -4,6 +4,7 @@ from loguru import logger
 import sys
 from uuid import uuid4
 import uvicorn
+from starlette.middleware.base import BaseHTTPMiddleware
 
 # from backend.app.api.v1.endpoints.document import docs_router
 from app.api.v1.endpoints.company import router as company_router
@@ -12,6 +13,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+
+class LoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        logger.info(f"Incoming request: {request.method} {request.url}")
+        response = await call_next(request)
+        logger.info(f"Response status: {response.status_code}")
+        return response
+
+
+app.add_middleware(LoggingMiddleware)
 
 # Include routers
 app.include_router(company_router, prefix="/companies")
