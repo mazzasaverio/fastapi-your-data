@@ -51,10 +51,10 @@ async def home():
     return RedirectResponse(url="/docs")
 
 
-# # Logger configuration
-# logger.remove()
-# logger.add(sys.stdout, level="INFO", format="{time} | {level} | {message}")
-# logger.add("logs/app_{time}.log", rotation="1 day", retention="10 days", level="INFO")
+# Logger configuration
+logger.remove()
+logger.add(sys.stdout, level="INFO", format="{time} | {level} | {message}")
+logger.add("logs/app_{time}.log", rotation="1 day", retention="10 days", level="INFO")
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8080, reload=True)
