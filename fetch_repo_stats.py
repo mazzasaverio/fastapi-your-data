@@ -27,14 +27,18 @@ def get_repo_stats(url):
 
     api_url = f"https://api.github.com/repos/{owner}/{repo}"
     response = requests.get(api_url)
+
     if response.status_code == 200:
         data = response.json()
+        last_updated = datetime.strptime(
+            data["updated_at"], "%Y-%m-%dT%H:%M:%SZ"
+        ).strftime("%Y-%m-%d")
         return (
-            repo,
-            url,
+            f"[{repo}]({url})",
             data["stargazers_count"],
             data["forks_count"],
-            data["updated_at"],
+            last_updated,
+            data["description"],
         )
     else:
         logger.error(
@@ -69,15 +73,27 @@ def update_readme(under_review_repos, reference_inspiration_repos):
     custom_heading_under_review = "## Repositories Under Review\n\n"
     custom_heading_reference_inspiration = "## Reference and Inspiration\n\n"
 
+    under_review_stats = [get_repo_stats(url) for url in under_review_repos]
+    under_review_stats.sort(
+        key=lambda x: x[3] if x[3] is not None else "", reverse=True
+    )
+
+    reference_inspiration_stats = [
+        get_repo_stats(url) for url in reference_inspiration_repos
+    ]
+    reference_inspiration_stats.sort(
+        key=lambda x: x[3] if x[3] is not None else "", reverse=True
+    )
+
     # Generate tables
     under_review_table = generate_table_section(
-        ["Repository", "Link", "Stars", "Forks", "Last Updated"],
-        [get_repo_stats(url) for url in under_review_repos],
+        ["Repository", "Stars", "Forks", "Last Updated", "About"],
+        under_review_stats,
     )
 
     reference_inspiration_table = generate_table_section(
-        ["Repository", "Link", "Stars", "Forks", "Last Updated"],
-        [get_repo_stats(url) for url in reference_inspiration_repos],
+        ["Repository", "Stars", "Forks", "Last Updated", "About"],
+        reference_inspiration_stats,
     )
 
     # Read the current README
@@ -143,6 +159,7 @@ reference_inspiration_repos = [
 under_review_repos = [
     "https://github.com/XamHans/video-2-text?tab=readme-ov-file",
     "https://github.com/waseemhnyc/instagraph-nextjs-fastapi",
+    "https://github.com/Aeternalis-Ingenium/JumpStart",
 ]
 
 # Update the README

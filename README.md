@@ -129,17 +129,17 @@ This warning indicates a change in the server's SSH fingerprint, potentially sig
 <!-- START_SECTION:under-review -->
 ## Repositories Under Review
 
-| Repository | Link | Stars | Forks | Last Updated |
+| Repository | Stars | Forks | Last Updated | About |
 |:-:|:-:|:-:|:-:|:-:|
-| video-2-text | https://github.com/XamHans/video-2-text?tab=readme-ov-file | 53 | 17 | 2024-02-02T20:26:58Z |
-| instagraph-nextjs-fastapi | https://github.com/waseemhnyc/instagraph-nextjs-fastapi | 67 | 11 | 2024-02-03T05:33:30Z |
+| [JumpStart](https://github.com/Aeternalis-Ingenium/JumpStart) | 46 | 7 | 2024-02-06 | A lean web application template with FastAPI, Uvicorn, Docker, and GitHub Actions. |
+| [instagraph-nextjs-fastapi](https://github.com/waseemhnyc/instagraph-nextjs-fastapi) | 67 | 11 | 2024-02-03 | Generate knowledge graphs. Inspired by @yoheinakajima instagraph.ai |
+| [video-2-text](https://github.com/XamHans/video-2-text?tab=readme-ov-file) | 53 | 17 | 2024-02-02 | Video2Text - Easily convert your video to text |
 <!-- END_SECTION:under-review -->
 <!-- START_SECTION:reference-inspiration -->
 ## Reference and Inspiration
 
-| Repository | Link | Stars | Forks | Last Updated |
+| Repository | Stars | Forks | Last Updated | About |
 |:-:|:-:|:-:|:-:|:-:|
-| fastapi-alembic-sqlmodel-async | https://github.com/jonra1993/fastapi-alembic-sqlmodel-async | 660 | 114 | 2024-02-06T08:30:07Z |
-| fastcrud | https://github.com/igorbenav/fastcrud | 241 | 12 | 2024-02-06T09:51:27Z |
-| fullstack-flask-app | https://github.com/FrancescoXX/fullstack-flask-app | 4 | 3 | 2024-01-01T17:42:04Z |
+| [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async) | 660 | 114 | 2024-02-06 | This is a project template which uses FastAPI, Alembic and async SQLModel as ORM. It shows a complete async CRUD using authentication and role base access control. |
+| [fastcrud](https://github.com/igorbenav/fastcrud) | 242 | 12 | 2024-02-06 | FastCRUD is a Python package for FastAPI, offering robust async CRUD operations and flexible endpoint creation utilities. |
 <!-- END_SECTION:reference-inspiration -->
