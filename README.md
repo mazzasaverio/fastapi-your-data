@@ -40,14 +40,7 @@ docker-compose -f docker-compose-dev.yml up --build
 3. Run the container:
 
    ```
-   docker run -p 8000:8000 \
-    -e DB_HOST=${DB_HOST} \
-    -e DB_PORT=${DB_PORT} \
-    -e DB_NAME=${DB_NAME} \
-    -e DB_PASS=${DB_PASS} \
-    -e DB_USER=${DB_USER} \
-    -e API_KEY=${API_KEY} \
-    inter92/fastapi-service:master
+   docker run -p 8000:8000 --network="host" -e DB_HOST=${DB_HOST}   -e DB_PORT=${DB_PORT}  -e DB_NAME=${DB_NAME}   -e DB_PASS=${DB_PASS}  -e DB_USER=${DB_USER}   -e API_KEY=${API_KEY}  inter92/fastapi-service:master
    ```
 
 ## Alembic Migrations
@@ -63,13 +56,6 @@ To apply the generated migrations to your database, execute:
 alembic upgrade head
 This command runs the migration script(s) against your database, upgrading it to the latest version.
 
-
-## Inspiration and References
-
-- [FastAPI with Alembic and SQLModel (Async)](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async)
-- [FastCRUD](https://github.com/igorbenav/fastcrud)
-- [Fullstack Flask App](https://github.com/FrancescoXX/fullstack-flask-app)
-
 ## TODO List
 
 - [x] Implement asynchronous database interactions.
@@ -82,11 +68,6 @@ Further ideas are under consideration.
 ## Additional Resources
 
 - Infrastructure details using Terraform: [Terraform GCP Repository](https://github.com/mazzasaverio/terraform-gcp)
-
-## Under Review
-
-- [Video to Text Conversion](https://github.com/XamHans/video-2-text?tab=readme-ov-file)
-- [Instagraph: Next.js and FastAPI](https://github.com/waseemhnyc/instagraph-nextjs-fastapi)
 
 ## Contributing
 
@@ -144,3 +125,21 @@ This warning indicates a change in the server's SSH fingerprint, potentially sig
    docker stop fastapi_container
    docker rm fastapi_container
    ```
+
+<!-- START_SECTION:under-review -->
+## Repositories Under Review
+
+| Repository | Link | Stars | Forks | Last Updated |
+|:-:|:-:|:-:|:-:|:-:|
+| video-2-text | https://github.com/XamHans/video-2-text?tab=readme-ov-file | 53 | 17 | 2024-02-02T20:26:58Z |
+| instagraph-nextjs-fastapi | https://github.com/waseemhnyc/instagraph-nextjs-fastapi | 67 | 11 | 2024-02-03T05:33:30Z |
+<!-- END_SECTION:under-review -->
+<!-- START_SECTION:reference-inspiration -->
+## Reference and Inspiration
+
+| Repository | Link | Stars | Forks | Last Updated |
+|:-:|:-:|:-:|:-:|:-:|
+| fastapi-alembic-sqlmodel-async | https://github.com/jonra1993/fastapi-alembic-sqlmodel-async | 660 | 114 | 2024-02-06T08:30:07Z |
+| fastcrud | https://github.com/igorbenav/fastcrud | 241 | 12 | 2024-02-06T09:51:27Z |
+| fullstack-flask-app | https://github.com/FrancescoXX/fullstack-flask-app | 4 | 3 | 2024-01-01T17:42:04Z |
+<!-- END_SECTION:reference-inspiration -->
