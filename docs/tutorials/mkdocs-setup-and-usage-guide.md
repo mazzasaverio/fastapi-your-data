@@ -4,17 +4,19 @@ To create a living documentation for your project `fastapi-your-data` that acts 
 
 #### Setting Up MkDocs
 
-1. **Install MkDocs**: Ensure you have Python 3.6 or higher and pip installed. Install MkDocs with pip:
+**Install MkDocs**: Ensure you have Python 3.6 or higher and pip installed. Install MkDocs with pip:
 
-   ```bash
-   pip install mkdocs
-   ```
+```bash
+pip install mkdocs
+```
 
-2. **Initialize MkDocs Project**: In your project's root directory (`/home/sam/github/fastapi-your-data`), initialize MkDocs:
-   ```bash
-   mkdocs new .
-   ```
-   This creates a `mkdocs.yml` configuration file and a `docs` directory with an `index.md` file for your documentation.
+**Initialize MkDocs Project**: In your project's root directory (`/home/sam/github/fastapi-your-data`), initialize MkDocs:
+
+```bash
+mkdocs new .
+```
+
+This creates a `mkdocs.yml` configuration file and a `docs` directory with an `index.md` file for your documentation.
 
 #### Organizing Documentation Content
 
@@ -92,13 +94,14 @@ For GitHub Pages, you can automate deployment using GitHub Actions as described 
 
 #### Automating Deployment with GitHub Actions
 
-1. **GitHub Actions Workflow**: In your project, create a workflow file under `.github/workflows/` (e.g., `deploy-docs.yml`) to define the steps for building and deploying your documentation to GitHub Pages.
+**GitHub Actions Workflow**
+In your project, create a workflow file under `.github/workflows/` (e.g., `deploy-docs.yml`) to define the steps for building and deploying your documentation to GitHub Pages.
 
-2. **Generating a GitHub Token**
+**Generating a GitHub Token**
 
 To perform actions such as deploying to GitHub Pages through GitHub Actions, you often need a GitHub token with the appropriate permissions. Here's how you can generate a `MY_GITHUB_TOKEN`:
 
-3. **Access GitHub Token Settings**
+**Access GitHub Token Settings**
 
 - Log in to your GitHub account.
 - Click on your profile picture in the top right corner and select **Settings**.
@@ -106,7 +109,7 @@ To perform actions such as deploying to GitHub Pages through GitHub Actions, you
 - Under Developer settings, click on **Personal access tokens**.
 - Click on the **Generate new token** button.
 
-4. **Configure Token Permissions**
+**Configure Token Permissions**
 
 - Give your token a descriptive name in the **Note** field.
 - Set the expiration for your token as per your requirement. For continuous integration (CI) purposes, you might want to select a longer duration or no expiration.
@@ -114,8 +117,6 @@ To perform actions such as deploying to GitHub Pages through GitHub Actions, you
   - `repo` - Full control of private repositories (includes `public_repo` for public repositories).
   - Additionally, you might need other permissions based on your specific requirements, but for deployment, `repo` is often sufficient.
 - Scroll down and click **Generate token**.
-
-5. **Securely Store the Token**
 
 After clicking **Generate token**, GitHub will display your new personal access token. **Make sure to copy your new personal access token now. You won’t be able to see it again!**
 
@@ -129,38 +130,40 @@ For use in GitHub Actions:
 
 If you named your secret something other than `MY_GITHUB_TOKEN`, make sure to reference it correctly in the `github_token` field.
 
-6. **Workflow Example**: Here's an example workflow that uses the `peaceiris/actions-gh-pages` action to deploy your MkDocs site to GitHub Pages:
+**Workflow Example**
 
-   ```yaml
-   name: Deploy MkDocs Site
+Here's an example workflow that uses the `peaceiris/actions-gh-pages` action to deploy your MkDocs site to GitHub Pages:
 
-   on:
-     push:
-       branches:
-         - master
+```yaml
+name: Deploy MkDocs Site
 
-   jobs:
-     deploy-docs:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v2
-         - name: Setup Python
-           uses: actions/setup-python@v2
-           with:
-             python-version: "3.x"
-         - name: Install dependencies
-           run: |
-             pip install mkdocs
-         - name: Build MkDocs site
-           run: mkdocs build
-         - name: Deploy to GitHub Pages
-           uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./site
-   ```
+on:
+  push:
+    branches:
+      - master
 
-   This workflow automatically builds and deploys your MkDocs site to GitHub Pages whenever changes are pushed to the master branch.
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          pip install mkdocs
+      - name: Build MkDocs site
+        run: mkdocs build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+```
+
+This workflow automatically builds and deploys your MkDocs site to GitHub Pages whenever changes are pushed to the master branch.
 
 #### Conclusion
 
