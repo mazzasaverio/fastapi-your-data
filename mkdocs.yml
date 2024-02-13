@@ -1,0 +1,10 @@
+site_name: FastAPI Your Data Documentation
+nav:
+  - Home: index.md
+  - Getting Started: getting-started/installation.md
+  - Tutorials:
+      - MkDocs Setup and Usage Guide: tutorials/mkdocs-setup-and-usage-guide.md
+      - How to Create a Changelog: tutorials/how-to-create-a-changelog.md
+  - API Reference: reference/api.md
+  - Changelog: changelog.md
+theme: readthedocs
