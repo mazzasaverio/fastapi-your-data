@@ -1,7 +1,5 @@
 ### Creating a Documentation with MkDocs
 
-#### Introduction
-
 To create a living documentation for your project `fastapi-your-data` that acts as a theoretical guide, practical handbook, and technical diary, we will use MkDocs in combination with GitHub and Python. This guide covers setting up MkDocs, organizing documentation, configuring it with `mkdocs.yml`, writing documentation in Markdown, and deploying it using GitHub Actions.
 
 #### Setting Up MkDocs
@@ -96,7 +94,42 @@ For GitHub Pages, you can automate deployment using GitHub Actions as described 
 
 1. **GitHub Actions Workflow**: In your project, create a workflow file under `.github/workflows/` (e.g., `deploy-docs.yml`) to define the steps for building and deploying your documentation to GitHub Pages.
 
-2. **Workflow Example**: Here's an example workflow that uses the `peaceiris/actions-gh-pages` action to deploy your MkDocs site to GitHub Pages:
+2. **Generating a GitHub Token**
+
+To perform actions such as deploying to GitHub Pages through GitHub Actions, you often need a GitHub token with the appropriate permissions. Here's how you can generate a `MY_GITHUB_TOKEN`:
+
+3. **Access GitHub Token Settings**
+
+- Log in to your GitHub account.
+- Click on your profile picture in the top right corner and select **Settings**.
+- On the left sidebar, click on **Developer settings**.
+- Under Developer settings, click on **Personal access tokens**.
+- Click on the **Generate new token** button.
+
+4. **Configure Token Permissions**
+
+- Give your token a descriptive name in the **Note** field.
+- Set the expiration for your token as per your requirement. For continuous integration (CI) purposes, you might want to select a longer duration or no expiration.
+- Select the scopes or permissions you want to grant this token. For deploying to GitHub Pages, you typically need:
+  - `repo` - Full control of private repositories (includes `public_repo` for public repositories).
+  - Additionally, you might need other permissions based on your specific requirements, but for deployment, `repo` is often sufficient.
+- Scroll down and click **Generate token**.
+
+5. **Securely Store the Token**
+
+After clicking **Generate token**, GitHub will display your new personal access token. **Make sure to copy your new personal access token now. You won’t be able to see it again!**
+
+For use in GitHub Actions:
+
+- Go to your repository on GitHub.
+- Click on **Settings** > **Secrets** > **Actions**.
+- Click on **New repository secret**.
+- Name your secret `MY_GITHUB_TOKEN` (or another name if you prefer, but remember to reference the correct name in your workflow file).
+- Paste your token into the **Value** field and click **Add secret**.```
+
+If you named your secret something other than `MY_GITHUB_TOKEN`, make sure to reference it correctly in the `github_token` field.
+
+6. **Workflow Example**: Here's an example workflow that uses the `peaceiris/actions-gh-pages` action to deploy your MkDocs site to GitHub Pages:
 
    ```yaml
    name: Deploy MkDocs Site
