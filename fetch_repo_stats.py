@@ -152,7 +152,7 @@ reference_inspiration_repos = [
     "https://github.com/jonra1993/fastapi-alembic-sqlmodel-async",
     "https://github.com/igorbenav/fastcrud",
     "https://github.com/FrancescoXX/fullstack-flask-app",
-    # Add more repository URLs as needed for reference and inspiration
+    "https://github.com/zhanymkanov/fastapi-best-practices"
 ]
 
 # Example usage
