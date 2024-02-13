@@ -15,12 +15,11 @@ jobs:
         with:
           python-version: "3.x"
       - name: Install dependencies
-        run: |
-          pip install mkdocs
+        run: pip install mkdocs
       - name: Build MkDocs site
         run: mkdocs build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
           publish_dir: ./site
