@@ -29,8 +29,6 @@ docs/
         installation.md
     tutorials/
         mkdocs-setup-and-usage-guide.md
-    reference/
-        api.md
     changelog.md
 ```
 
@@ -44,7 +42,6 @@ nav:
   - Home: index.md
   - Getting Started: getting-started/installation.md
   - Tutorials: tutorials/mkdocs-setup-and-usage-guide.md
-  - API Reference: reference/api.md
   - Changelog: changelog.md
 theme: readthedocs
 ```

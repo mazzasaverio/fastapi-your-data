@@ -14,6 +14,6 @@ If you're new to FastAPI Your Data, we recommend starting with the [Getting Star
 
 ## Contributions
 
-Contributions to FastAPI Your Data are welcome! See the [Contributing](contributing.md) section for guidelines on how to contribute to the project.
+Contributions to FastAPI Your Data are welcome!
 
 Thank you for being part of the FastAPI Your Data community!
