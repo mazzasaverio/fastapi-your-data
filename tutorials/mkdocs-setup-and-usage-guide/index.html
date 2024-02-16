@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation/">Getting Started</a>
+                <li class="toctree-l1"><a class="" href="../../getting-started/installation.md">Getting Started</a>
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Tutorials</span></p>
@@ -191,7 +191,7 @@ In your project, create a workflow file under <code>.github/workflows/</code> (e
 <li>Name your secret <code>MY_GITHUB_TOKEN</code> (or another name if you prefer, but remember to reference the correct name in your workflow file).</li>
 <li>Paste your token into the <strong>Value</strong> field and click <strong>Add secret</strong>.```</li>
 </ul>
-<p>If you named your secret something other than <code>MY_GITHUB_TOKEN</code>, make sure to reference it correctly in the <code>github_token</code> field.</p>
+<p>If you named your secret something other than <code>MY_GITHUB_TOKEN</code>, make sure to reference it correctly in the <code>MY_GITHUB_TOKEN</code> field.</p>
 <p><strong>Workflow Example</strong></p>
 <p>Here's an example workflow that uses the <code>peaceiris/actions-gh-pages</code> action to deploy your MkDocs site to GitHub Pages:</p>
 <pre><code class="language-yaml">name: Deploy MkDocs Site
@@ -218,7 +218,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
           publish_dir: ./site
 </code></pre>
 <p>This workflow automatically builds and deploys your MkDocs site to GitHub Pages whenever changes are pushed to the master branch.</p>
@@ -228,7 +228,7 @@ jobs:
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../getting-started/installation/" class="btn btn-neutral float-left" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../.." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../how-to-create-a-changelog/" class="btn btn-neutral float-right" title="How to Create a Changelog">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -252,7 +252,7 @@ jobs:
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../getting-started/installation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../how-to-create-a-changelog/" style="color: #fcfcfc">Next &raquo;</a></span>
