@@ -1,6 +1,6 @@
 # FastAPI Your Data
 
-I am starting this project with the idea of continuously building and improving a methodology and basic structure that allows for the effective organization and historical storage of data of interest. This includes managing the data and having it ready for use in various projects.
+I am starting this project with the goal of continuously learning, building, and enhancing a methodology and foundational structure to effectively archive data of interest and utilize it in production. The idea is to maintain a sufficiently general structure and use this repository as a laboratory to understand mechanisms, concepts, and to have a starting template for various configurations.
 
 The concept is to let myself be guided by the following principles (subjective) and see if I can find a methodology that works for me (though I hope it will be inspirational or at least useful to others).
 
@@ -12,12 +12,25 @@ The concept is to let myself be guided by the following principles (subjective) 
 
 Certainly, to move in this direction, I will also start other parallel repositories to cover different parts of this system (including ETL processes or frontend parts), but the heart of this direction will be this repository.
 
-## Current Progress
+## Current Features
 
-- **Database Connection**: Initiated with a basic connection to a PostgreSQL database utilizing SQLAlchemy's ORM.
-- **Design Philosophy**: The design I am adopting involves having a structure where the app will be supplemented with other independent modules. These modules will be managed and mounted by a main.py in the root, which, through an API gateway, will redirect various calls.
-- **Data Module Focus**: Presently concentrating on a single module, which will correspond to a specific family or category of data. Each data category will have its own dedicated database with a unique table structure.
-- **Architecture**: The design includes a models layer and a repository layer for database interactions. The API layer, with its various routes, forms the final layer of the architecture.
+### Design Philosophy
+
+The design strategy incorporates a framework where the application is enhanced with several independent modules. These modules are orchestrated and integrated by `main.py` at the root level, which routes various requests through an API gateway.
+
+Although it might seem overwhelming at first, adopting a monorepo accelerates the design and learning process. Nonetheless, I strive to keep everything modular to facilitate the structuring of microservices or the segregation of different components into separate repositories when scaling becomes necessary in the future.
+
+### Database Connection
+
+The goal is to start as agnostically as possible by using SQLAlchemy as the ORM and exploring the best ODM options for unstructured data.
+
+Currently, I am beginning with PostgreSQL, leveraging the pgvector extension for embedding-related data.
+
+## In Progress
+
+- ETL processes to populate and maintain the database up-to-date.
+
+## Future Features
 
 ## Environment Setup
 
@@ -52,19 +65,6 @@ docker-compose -f docker-compose-dev.yml up --build
    ```
    docker run -p 8000:8000 --network="host" -e DB_HOST=${DB_HOST}   -e DB_PORT=${DB_PORT}  -e DB_NAME=${DB_NAME}   -e DB_PASS=${DB_PASS}  -e DB_USER=${DB_USER}   -e API_KEY=${API_KEY}  inter92/fastapi-service:master
    ```
-
-## Alembic Migrations
-
-To automatically generate a migration script based on your model changes, run:
-
-alembic revision --autogenerate -m "Create tables"
-
-This command compares your database schema with your SQLAlchemy models and creates a migration script.
-
-To apply the generated migrations to your database, execute:
-
-alembic upgrade head
-This command runs the migration script(s) against your database, upgrading it to the latest version.
 
 ## Additional Resources
 

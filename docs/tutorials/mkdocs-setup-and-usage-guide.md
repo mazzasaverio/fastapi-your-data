@@ -128,7 +128,7 @@ For use in GitHub Actions:
 - Name your secret `MY_GITHUB_TOKEN` (or another name if you prefer, but remember to reference the correct name in your workflow file).
 - Paste your token into the **Value** field and click **Add secret**.```
 
-If you named your secret something other than `MY_GITHUB_TOKEN`, make sure to reference it correctly in the `github_token` field.
+If you named your secret something other than `MY_GITHUB_TOKEN`, make sure to reference it correctly in the `MY_GITHUB_TOKEN` field.
 
 **Workflow Example**
 
@@ -159,7 +159,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
           publish_dir: ./site
 ```
 
