@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Alembic - FastAPI Your Data Documentation</title>
+    <title>Vector databases - FastAPI Your Data Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Alembic";
-        var mkdocs_page_input_path = "chapter-3-data-migration/alembic.md";
+        var mkdocs_page_name = "Vector databases";
+        var mkdocs_page_input_path = "chapter-3-database/vector_databases.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -72,7 +72,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Alembic</li>
+      <li class="breadcrumb-item active">Vector databases</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,24 +81,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h3 id="enhanced-alembic-migrations-documentation">Enhanced Alembic Migrations Documentation</h3>
-<h4 id="migration-naming-convention">Migration Naming Convention</h4>
-<p>When creating migration scripts, adhere to a consistent naming scheme that reflects the nature of the changes. The recommended format is <code>date_slug.py</code>, where <code>date</code> represents the creation date and <code>slug</code> provides a brief description of the migration's purpose. For example, <code>2022-08-24_post_content_idx.py</code>.</p>
-<h4 id="configuration-file-template">Configuration File Template</h4>
-<p>In the <code>alembic.ini</code> file, define the file template to ensure that all migration scripts follow the established naming convention. The template should look like this:</p>
-<pre><code class="language-ini">file_template = %%(year)d-%%(month).2d-%%(day).2d_%%(slug)s
-</code></pre>
-<p>This ensures that every new migration script includes the date and a descriptive slug.</p>
-<h4 id="automated-migration-script-generation">Automated Migration Script Generation</h4>
-<p>To streamline the process of creating migration scripts, use the <code>--autogenerate</code> option with the <code>alembic revision</code> command. This feature compares the current state of your database schema with your SQLAlchemy models and generates a migration script accordingly. Here's how you can use it:</p>
-<pre><code class="language-bash">alembic revision --autogenerate -m &quot;Create tables&quot;
-</code></pre>
-<p>Replace <code>"Create tables"</code> with a message that accurately describes the changes being implemented.</p>
-<h4 id="applying-migrations">Applying Migrations</h4>
-<p>After generating the migration scripts, apply them to your database with the <code>alembic upgrade</code> command followed by <code>head</code>. This command executes the migration scripts against your database, bringing it up to date with the latest schema changes.</p>
-<pre><code class="language-bash">alembic upgrade head
-</code></pre>
-<p>By following these practices, you maintain a clear and organized history of your database schema changes, making it easier to manage and understand the evolution of your data model over time.</p>
+                
               
             </div>
           </div><footer>
