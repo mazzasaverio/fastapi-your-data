@@ -1,6 +1,17 @@
 # FastAPI Your Data
 
-I am starting this project with the goal of continuously learning, building, and enhancing a methodology and foundational structure to effectively archive data of interest and utilize it in production. The idea is to maintain a sufficiently general structure and use this repository as a laboratory to understand mechanisms, concepts, and to have a starting template for various configurations.
+I am starting this project with the goal of continuously learning, building, and enhancing a methodology and foundational structure to effectively archive data of interest and utilize it in production. The idea is to maintain a sufficiently general structure and use this repository as a laboratory to understand basics, concepts, frameworks and to have a starting template for various configurations.
+
+## Tech stack
+
+- Python 3.10 with fastapi and SQLAlchemy
+- Local Postgres with pgvector extension
+
+## Quickstart
+
+## Current Features
+
+## Metodology
 
 The concept is to let myself be guided by the following principles (subjective) and see if I can find a methodology that works for me (though I hope it will be inspirational or at least useful to others).
 
@@ -9,10 +20,6 @@ The concept is to let myself be guided by the following principles (subjective) 
 - The ideal world would be to build a "template" along with documentation and best practices to scale while keeping costs lower than profits, trying to keep track of all mistakes and why of some decisions.
 - This project is an excuse to study, experiment, practice, and improve all the topics I am interested in improving as a data engineer and backend engineer. It's about building a methodology and a system that allows me to always have access to all the historical data and have it ready for any current or future idea or project.
 - Having documentation as updated as possible on the theory, practice, and specific choices for this repository, starting with the fundamentals and experimenting through various tools, frameworks, and tools.
-
-Certainly, to move in this direction, I will also start other parallel repositories to cover different parts of this system (including ETL processes or frontend parts), but the heart of this direction will be this repository.
-
-## Current Features
 
 ### Design Philosophy
 
@@ -127,24 +134,14 @@ This warning indicates a change in the server's SSH fingerprint, potentially sig
    docker rm fastapi_container
    ```
 
-<!-- START_SECTION:under-review -->
+## References and Inspirations
 
-## Repositories Under Review
+- [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async): A project integrating FastAPI with Alembic and SQLModel for asynchronous database operations.
+- [fastcrud](https://github.com/igorbenav/fastcrud): A library for simplifying CRUD operations in FastAPI.
+- [agentkit](https://github.com/BCG-X-Official/agentkit): A toolkit for building intelligent agents.
 
-|                                      Repository                                      | Stars | Forks | Last Updated |                                       About                                        |
-| :----------------------------------------------------------------------------------: | :---: | :---: | :----------: | :--------------------------------------------------------------------------------: |
-|            [JumpStart](https://github.com/Aeternalis-Ingenium/JumpStart)             |  46   |   7   |  2024-02-06  | A lean web application template with FastAPI, Uvicorn, Docker, and GitHub Actions. |
-| [instagraph-nextjs-fastapi](https://github.com/waseemhnyc/instagraph-nextjs-fastapi) |  67   |  11   |  2024-02-03  |        Generate knowledge graphs. Inspired by @yoheinakajima instagraph.ai         |
-|      [video-2-text](https://github.com/XamHans/video-2-text?tab=readme-ov-file)      |  53   |  17   |  2024-02-02  |                   Video2Text - Easily convert your video to text                   |
+## Watchlist Repositories
 
-<!-- END_SECTION:under-review -->
-<!-- START_SECTION:reference-inspiration -->
-
-## Reference and Inspiration
-
-|                                          Repository                                           | Stars | Forks | Last Updated |                                                                                About                                                                                |
-| :-------------------------------------------------------------------------------------------: | :---: | :---: | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async) |  660  |  114  |  2024-02-06  | This is a project template which uses FastAPI, Alembic and async SQLModel as ORM. It shows a complete async CRUD using authentication and role base access control. |
-|                       [fastcrud](https://github.com/igorbenav/fastcrud)                       |  242  |  12   |  2024-02-06  |                      FastCRUD is a Python package for FastAPI, offering robust async CRUD operations and flexible endpoint creation utilities.                      |
-
-<!-- END_SECTION:reference-inspiration -->
+- [JumpStart](https://github.com/Aeternalis-Ingenium/JumpStart): A starter template for new projects.
+- [instagraph-nextjs-fastapi](https://github.com/waseemhnyc/instagraph-nextjs-fastapi): An integration of Next.js with FastAPI for building Instagram-like applications.
+- [video-2-text](https://github.com/XamHans/video-2-text?tab=readme-ov-file): A project focused on converting video content to text.
