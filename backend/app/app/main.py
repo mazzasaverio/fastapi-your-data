@@ -1,6 +1,6 @@
-from application.sub_app_1 import main as sub_app_1_main
-from application.gateway.api_router import call_api_gateway
-from application.controller import platform
+from app.sub_app_1 import main as sub_app_1_main
+from app.gateway.api_router import call_api_gateway
+from app.controller import platform
 from fastapi import FastAPI, Depends
 
 

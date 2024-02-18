@@ -1,18 +1,19 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
-
-# Set the working directory in the container
+FROM tiangolo/uvicorn-gunicorn:python3.11-slim
+ENV PYTHONUNBUFFERED=1
 WORKDIR /code
+# Install Poetry
+RUN apt clean && apt update && apt install curl -y
+RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
+    cd /usr/local/bin && \
+    ln -s /opt/poetry/bin/poetry && \
+    poetry config virtualenvs.create false
 
-# Copy the current directory contents into the container at /code
-COPY ./app /code/app
-COPY requirements.txt /code/
+# Copy poetry.lock* in case it doesn't exist in the repo
+COPY app/pyproject.toml app/poetry.lock* /code/
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Allow installing dev dependencies to run tests
+ARG INSTALL_DEV=false
+RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
 
 ENV PYTHONPATH=/code
 EXPOSE 8000
-
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

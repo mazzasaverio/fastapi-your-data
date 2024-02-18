@@ -136,9 +136,16 @@ This warning indicates a change in the server's SSH fingerprint, potentially sig
 
 ## References and Inspirations
 
+### Github
+
 - [fastapi-alembic-sqlmodel-async](https://github.com/jonra1993/fastapi-alembic-sqlmodel-async): A project integrating FastAPI with Alembic and SQLModel for asynchronous database operations.
 - [fastcrud](https://github.com/igorbenav/fastcrud): A library for simplifying CRUD operations in FastAPI.
 - [agentkit](https://github.com/BCG-X-Official/agentkit): A toolkit for building intelligent agents.
+- [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-best-practices)
+
+### Books
+
+- [Building Python Microservices with FastAPI](https://amzn.to/3SZvdFk)
 
 ## Watchlist Repositories
 

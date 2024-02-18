@@ -1,4 +1,4 @@
-from application.sub_app_1.api.v1.api import api_router as api_router_v1
+from app.sub_app_1.api.v1.api import api_router as api_router_v1
 from fastapi.responses import RedirectResponse
 from fastapi import FastAPI
 
