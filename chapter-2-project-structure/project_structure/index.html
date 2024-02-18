@@ -81,18 +81,105 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <ol>
-<li>Project Structure. Consistent &amp; predictable
-   There are many ways to structure the project, but the best structure is a structure that is consistent, straightforward, and has no surprises.</li>
-</ol>
-<p>If looking at the project structure doesn't give you an idea of what the project is about, then the structure might be unclear.
-If you have to open packages to understand what modules are located in them, then your structure is unclear.
-If the frequency and location of the files feels random, then your project structure is bad.
-If looking at the module's location and its name doesn't give you an idea of what's inside it, then your structure is very bad.
-Although the project structure, where we separate files by their type (e.g. api, crud, models, schemas) presented by @tiangolo is good for microservices or projects with fewer scopes, we couldn't fit it into our monolith with a lot of domains and modules. Structure that I found more scalable and evolvable is inspired by Netflix's Dispatch with some little modifications.</p>
-<p>Reference</p>
-<p><a href="https://github.com/jonra1993/fastapi-alembic-sqlmodel-async">fastapi-alembic-sqlmodel-async</a></p>
-<p>https://github.com/BCG-X-Official/agentkit</p>
+                <h2 id="project-structure-and-microservice-design-patterns-fastapi-your-data-episode-1">Project Structure and Microservice Design Patterns (FastAPI Your Data - Episode 1)</h2>
+<p>A well-organized project structure is paramount for any development endeavor. The ideal structure is one that maintains consistency, simplicity, and predictability throughout.</p>
+<ul>
+<li>A clear project structure should immediately convey the essence of the project to anyone reviewing it. If it fails to do so, it may be considered ambiguous.</li>
+<li>The necessity to navigate through packages to decipher the contents and purpose of modules indicates a lack of clarity in the structure.</li>
+<li>An arbitrary arrangement of files, both in terms of frequency and location, signifies a poorly organized project structure.</li>
+<li>When the naming and placement of a module do not intuitively suggest its functionality, the structure is deemed highly ineffective.</li>
+</ul>
+<h3 id="exploring-microservice-design-patterns">Exploring Microservice Design Patterns</h3>
+<p>Our journey into the realm of software architecture focuses on strategies and principles designed to ease the transition from monolithic systems to a microservices architecture. This exploration is centered around breaking down a large application into smaller, more manageable segments, known as problem domains or use cases. A critical step in this process is the establishment of a unified gateway that consolidates these domains, thereby facilitating smoother interaction and integration. Additionally, we employ specialized modeling techniques tailored to each microservice, while also tackling essential aspects such as logging and configuration management within the application.</p>
+<h4 id="objectives-and-topics">Objectives and Topics</h4>
+<p>The aim is to showcase the effectiveness and feasibility of applying these architectural patterns to a software sample. To accomplish this, we will explore several essential topics, including:</p>
+<ul>
+<li>Application of decomposition patterns</li>
+<li>Creation of a common gateway</li>
+<li>Centralization of logging mechanisms</li>
+<li>Consumption of REST APIs</li>
+<li>Application of domain modeling approaches</li>
+<li>Management of microservice configurations</li>
+</ul>
+<h4 id="principles-on-project-structure">Principles on Project Structure</h4>
+<p>There are numerous ways to structure a project, but the optimal structure is one that is consistent, straightforward, and devoid of surprises.</p>
+<p>If a glance at the project structure doesn't convey what the project entails, then the structure might be unclear. If you need to open packages to decipher the modules within them, your structure is not clear. If the organization and location of files seem arbitrary, then your project structure is poor. If the module's location and name don't offer insight into its contents, then the structure is very poor. Although the project structure, where files are separated by type (e.g., api, crud, models, schemas) as presented by @tiangolo, is suitable for microservices or projects with limited scopes, it was not adaptable to our monolith with numerous domains and modules. A structure I found more scalable and evolvable draws inspiration from Netflix's Dispatch, with some minor adjustments.</p>
+<h3 id="applying-the-decomposition-pattern">Applying the Decomposition Pattern</h3>
+<p>For instance, consider solving problems like:</p>
+<ul>
+<li>Identifying GitHub repositories that match your interests and where you'd like to contribute, based on a questionnaire that analyzes similarities with repository READMEs and other details.</li>
+<li>A module for finding companies, startups, or projects that align with your personality and characteristics.</li>
+<li>A note organization and interaction module.</li>
+<li>A module that guides you through decision-making questions based on books of interest.</li>
+</ul>
+<p>Each microservice operates independently, having its server instance, management, logging mechanism, dependencies, container, and configuration file. Starting or shutting down one service does not affect the others, thanks to unique context roots and ports.</p>
+<h4 id="sub-applications-in-fastapi">Sub-Applications in FastAPI</h4>
+<p>FastAPI provides an alternative design approach through the creation of sub-applications within a main application. The main application file (<code>main.py</code>) acts as a gateway, directing traffic to these sub-applications based on their context paths. This setup allows for the mounting of FastAPI instances for each sub-application, showcasing FastAPI's flexibility in microservice design.</p>
+<p>Sub-applications, such as <code>sub_app_1</code>, <code>sub_app_2</code>, etc., are typical independent microservice applications mounted into the <code>main.py</code> component, the top-level application. Each sub-application has a <code>main.py</code> component which sets up its FastAPI instance, as demonstrated in the following code snippet:</p>
+<pre><code class="language-python">from fastapi import FastAPI
+sub_app_1 = FastAPI()
+sub_app_1.include_router(admin.router)
+sub_app_1.include_router(management.router)
+</code></pre>
+<p>These sub-applications are typical FastAPI microservice applications containing all essential components such as routers, middleware, exception handlers, and all necessary packages to build REST API services. The only difference from standard applications is that their context paths or URLs are defined and managed by the top-level application that oversees them.</p>
+<p>Optionally, we can run sub-applications independently from <code>main.py</code> using commands like <code>uvicorn main:sub_app_1 --port 8001</code> for <code>sub_app_1</code>, <code>uvicorn main:sub_app_2 --port 8082</code> for <code>sub_app_2</code>, and <code>uvicorn main:sub_app_3 --port 8003</code> for <code>sub_app_3</code>. The ability to run them independently despite being mounted illustrates why these mounted sub-applications are considered microservices.</p>
+<h3 id="mounting-submodules">Mounting Submodules</h3>
+<p>All FastAPI decorators from each sub-application must be mounted in the <code>main.py</code> component of the top-level application to be accessible at runtime. The <code>mount()</code> function is called by the FastAPI decorator object of the top-level application, which incorporates all FastAPI instances of the sub-applications into the gateway application (<code>main.py</code>) and assigns each to its corresponding URL context.</p>
+<pre><code class="language-python">from fastapi import FastAPI
+from application.sub_app_1 import main as sub_app_1_main
+
+app = FastAPI()
+
+app.mount(&quot;/sub_app_1&quot;, sub_app_1_main.app)
+</code></pre>
+<p>With this configuration, the mounted <code>/sub_app_1</code> URL will be used to access all the API services of the <code>sub_app_1</code> module app. These mounted paths are recognized once declared in <code>mount()</code>, as FastAPI automatically manages all these paths through the root_path specification.</p>
+<p>Since all sub-applications in our system are independent microservices, let's now apply another design strategy to manage requests to these applications using only the main URL. We will use the main application as a gateway to our sub-applications.</p>
+<h3 id="creating-a-common-gateway">Creating a Common Gateway</h3>
+<p>It will be simpler to use the URL of the main application to manage requests and direct users to any sub-application. The main application can act as a pseudo-reverse proxy or an entry point for user requests, which will then redirect user requests to the desired sub-application. This approach is based on a design pattern known as API Gateway. Let's explore how we can implement this design to manage independent microservices mounted on the main application using a workaround.</p>
+<h3 id="implementing-the-main-endpoint">Implementing the Main Endpoint</h3>
+<p>There are various solutions for implementing this gateway endpoint. One option is to create a simple REST API service in the top-level application with an integer path parameter that identifies the microservice's ID parameter. If the ID parameter is invalid, the endpoint will return a JSON string instead of an error. Below is a straightforward implementation of this endpoint:</p>
+<pre><code class="language-python">from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get(&quot;/platform/{portal_id}&quot;)
+def access_portal(portal_id: int):
+    return {&quot;message&quot;: &quot;Welcome&quot;}
+</code></pre>
+<p>The <code>access_portal</code> API endpoint is established as a GET path operation with <code>portal_id</code> as its path parameter. This parameter is crucial because it determines which sub-app microservice the user wishes to access.</p>
+<h3 id="evaluating-the-microservice-id">Evaluating the Microservice ID</h3>
+<p>The <code>portal_id</code> parameter is automatically retrieved and evaluated using a dependable function injected into the <code>APIRouter</code> instance where the API endpoint is defined.</p>
+<pre><code class="language-python">from fastapi import Request
+
+def call_api_gateway(request: Request):
+    portal_id = request.path_params[&quot;portal_id&quot;]
+    print(request.path_params)
+    if portal_id == str(1):
+        raise RedirectSubApp1PortalException()
+
+class RedirectSubApp1PortalException(Exception):
+    pass
+</code></pre>
+<p>This solution is a practical workaround to initiate a custom event, as FastAPI lacks built-in event handling aside from startup and shutdown event handlers. Once <code>call_api_gateway()</code> identifies <code>portal_id</code> as a valid microservice ID, it will raise custom exceptions. For instance, it will throw <code>RedirectStudentPortalException</code> if the user aims to access a specific microservice. However, first, we need to inject <code>call_api_gateway()</code> into the <code>APIRouter</code> instance managing the gateway endpoint through the <code>main.py</code> component of the top-level application.</p>
+<pre><code class="language-python">from fastapi import FastAPI, Depends, Request, Response
+from gateway.api_router import call_api_gateway
+from controller import platform
+app = FastAPI()
+app.include_router(platform.router, dependencies=[Depends(call_api_gateway)])
+</code></pre>
+<p>All raised exceptions require an exception handler to listen for the throws and execute necessary tasks to engage with the microservices.</p>
+<h2 id="references-and-inspirations">References and Inspirations</h2>
+<h3 id="github">Github</h3>
+<ul>
+<li><a href="https://github.com/jonra1993/fastapi-alembic-sqlmodel-async">fastapi-alembic-sqlmodel-async</a>: A project integrating FastAPI with Alembic and SQLModel for asynchronous database operations.</li>
+<li><a href="https://github.com/igorbenav/fastcrud">fastcrud</a>: A library for simplifying CRUD operations in FastAPI.</li>
+<li><a href="https://github.com/BCG-X-Official/agentkit">agentkit</a>: A toolkit for building intelligent agents.</li>
+<li><a href="https://github.com/zhanymkanov/fastapi-best-practices">fastapi-best-practices</a></li>
+</ul>
+<h3 id="books">Books</h3>
+<ul>
+<li><a href="https://amzn.to/3SZvdFk">Building Python Microservices with FastAPI</a></li>
+</ul>
               
             </div>
           </div><footer>

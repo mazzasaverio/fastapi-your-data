@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Terraform - FastAPI Your Data Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Terraform";
+        var mkdocs_page_input_path = "chapter-5-iaac/terraform.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> FastAPI Your Data Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../getting-started/installation.md">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/mkdocs-setup-and-usage-guide/">MkDocs Setup and Usage Guide</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/how-to-create-a-changelog/">How to Create a Changelog</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../changelog/">Changelog</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">FastAPI Your Data Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Terraform</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h3 id="1-google-cloud-platform-account">1. Google Cloud Platform Account</h3>
+<ul>
+<li><strong>Sign Up</strong>: Ensure you have an active GCP account. <a href="https://cloud.google.com/">Sign up here</a> if needed.</li>
+</ul>
+<h3 id="2-project-setup">2. Project Setup</h3>
+<ul>
+<li><strong>New Project</strong>: Create a new GCP project. Note down the project ID for future use.</li>
+</ul>
+<h3 id="3-service-account">3. Service Account</h3>
+<ul>
+<li><strong>Create Service Account</strong>: Create a service account with 'Owner' permissions in your GCP project.</li>
+<li><strong>Generate Key File</strong>: Generate a JSON key file for this service account and store it securely.</li>
+</ul>
+<h3 id="4-billing">4. Billing</h3>
+<ul>
+<li><strong>Enable Billing</strong>: Ensure billing is enabled on your GCP project for using paid services.</li>
+</ul>
+<h3 id="5-connecting-cloud-build-to-your-github-account">5. Connecting Cloud Build to Your GitHub Account</h3>
+<ul>
+<li>Create a personal access token. Make sure to set your token (classic) to have no expiration date and select the following permissions when prompted in GitHub: repo and read:user. If your app is installed in an organization, make sure to also select the read:org permission.</li>
+</ul>
+<p>https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1</p>
+<h2 id="terraform-configuration">Terraform Configuration</h2>
+<ul>
+<li><strong>Rename File</strong>: Change <code>terraform.tfvars.example</code> to <code>terraform.tfvars</code>.</li>
+<li><strong>Insert Credentials</strong>: Add your credentials to the <code>terraform.tfvars</code> file.</li>
+</ul>
+<h2 id="connecting-to-cloud-sql-using-cloud-sql-proxy-example-with-dbeaver">Connecting to Cloud SQL using Cloud SQL Proxy (Example with DBeaver)</h2>
+<p>For a secure connection to your Cloud SQL instance from local development environments or database management tools like DBeaver, the Cloud SQL Proxy provides a robust solution. Follow these steps to set up and use the Cloud SQL Proxy:</p>
+<ol>
+<li><strong>Download the Cloud SQL Proxy</strong>:
+   Use the command below to download the latest version of Cloud SQL Proxy for Linux:</li>
+</ol>
+<p><code>bash
+   curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.1/cloud-sql-proxy.linux.amd64</code></p>
+<ol>
+<li><strong>Make the Proxy Executable</strong>:
+   Change the downloaded file's permissions to make it executable:</li>
+</ol>
+<p><code>bash
+   chmod +x cloud-sql-proxy</code></p>
+<ol>
+<li><strong>Start the Cloud SQL Proxy</strong>:
+   Launch the proxy with your Cloud SQL instance details. Replace the <code>[INSTANCE_CONNECTION_NAME]</code> with your specific Cloud SQL instance connection name:</li>
+</ol>
+<p><code>bash
+   ./cloud-sql-proxy --credentials-file=/path/to/credentials_file.json 'project-name:region:instance-name?port=port_number'</code></p>
+<ol>
+<li><strong>Connect using DBeaver</strong>:</li>
+<li>Open DBeaver and create a new database connection.</li>
+<li>Set the host to <code>localhost</code> and the port to <code>5433</code> (or the port you specified).</li>
+<li>Provide your Cloud SQL instance's database credentials.</li>
+</ol>
+<p>For more details on using the Cloud SQL Proxy, visit the official documentation:
+<a href="https://cloud.google.com/sql/docs/postgres/connect-auth-proxy">Google Cloud SQL Proxy Documentation</a></p>
+<h2 id="useful-commands">Useful Commands</h2>
+<ul>
+<li><strong>Perform only a few modules (attention to addictions)</strong>:</li>
+</ul>
+<p><code>bash
+  terraform apply -target=module.compute_instance</code></p>
+<ul>
+<li><strong>Add SSH Key</strong>:
+  <code>bash
+  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code></li>
+<li><strong>Connect via SSH</strong>:
+  <code>bash
+  ssh -i /path/to/your/private/key your_instance_username@external_ip_address</code>
+  <code>bash
+  chmod 600 ~/.ssh/id_rsa</code></li>
+<li><strong>Test Cloud SQL Connection</strong>:
+  <code>bash
+  psql -h private_ip_address -U database_user -d database_name</code></li>
+</ul>
+<h2 id="additional-information">Additional Information</h2>
+<p>For detailed implementation, refer to the contents of specific <code>.tf</code> files within each module's directory.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

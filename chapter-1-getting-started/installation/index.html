@@ -81,7 +81,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h3 id="setting-up-your-environment-with-poetry">Setting Up Your Environment with Poetry</h3>
+<p>To correctly set up your environment with Poetry inside the <code>backend/app</code> directory, follow these steps:</p>
+<h4 id="1-install-poetry">1. Install Poetry</h4>
+<p>First, ensure Poetry is installed. If it's not already installed, you can do so by running the following command in your terminal:</p>
+<pre><code class="language-bash">curl -sSL https://install.python-poetry.org | python3 -
+</code></pre>
+<p>After installation, make sure to add Poetry to your system's PATH.</p>
+<h4 id="2-configure-poetry">2. Configure Poetry</h4>
+<p>Navigate to your project's root directory (<code>/home/sam/github/fastapi-your-data</code>) and then enter the <code>backend/app</code> directory. If you're using a custom setup or working within a specific part of your project, adjust paths accordingly.</p>
+<pre><code class="language-bash">cd /home/sam/github/fastapi-your-data/backend/app
+</code></pre>
+<p>Before proceeding, ensure you have a <code>pyproject.toml</code> file in the <code>app</code> directory. This file defines your project and its dependencies. If it's not present, you can create it by running:</p>
+<pre><code class="language-bash">poetry init
+</code></pre>
+<p>And follow the interactive prompts.</p>
+<h4 id="3-install-dependencies">3. Install Dependencies</h4>
+<pre><code class="language-bash">poetry add pandas uvicorn fastapi pytest loguru pydantic-settings alembic pgvector
+</code></pre>
+<p>This command installs all necessary packages in a virtual environment managed by Poetry.</p>
+<h4 id="4-activate-the-virtual-environment">4. Activate the Virtual Environment</h4>
+<p>To activate the Poetry-managed virtual environment, use the following command:</p>
+<pre><code class="language-bash">poetry shell
+</code></pre>
+<p>This command spawns a shell within the virtual environment, allowing you to run your project's Python scripts and manage dependencies.</p>
+<h4 id="5-running-your-application">5. Running Your Application</h4>
+<p>Within the activated virtual environment and the correct directory, you can run your FastAPI application. For instance, to run the main application found in <code>backend/app/app/main.py</code>, execute:</p>
+<pre><code class="language-bash">uvicorn app.main:app --reload
+</code></pre>
+<p>This command starts the Uvicorn server with hot reload enabled, serving your FastAPI application.</p>
+<h4 id="6-deactivating-the-virtual-environment">6. Deactivating the Virtual Environment</h4>
+<p>When you're done working in the virtual environment, you can exit by typing <code>exit</code> or pressing <code>Ctrl+D</code>.</p>
+<h3 id="additional-tips">Additional Tips</h3>
+<ul>
+<li><strong>Environment Variables</strong>: Make sure to set up any required environment variables. You can manage them using <code>.env</code> files and load them in your application using libraries like <code>python-dotenv</code>.</li>
+<li><strong>Dependency Management</strong>: Use <code>poetry add &lt;package-name&gt;</code> to add new dependencies and <code>poetry update</code> to update existing ones.</li>
+<li><strong>Testing and Linting</strong>: Utilize Poetry to run tests and linters by adding custom scripts in the <code>pyproject.toml</code> file.</li>
+</ul>
+<p>This guide should help you set up and manage your Python environment effectively using Poetry, enhancing your development workflow for the FastAPI project located in <code>/home/sam/github/fastapi-your-data/backend/app</code>.</p>
               
             </div>
           </div><footer>
