@@ -5,7 +5,7 @@ resource "google_cloud_run_v2_service" "default" {
 
   template {
     containers {
-      image = "gcr.io/${var.gcp_project_id}/fastapi-service:latest"
+      image = "gcr.io/${var.gcp_project_id}/fastapi-your-data:latest"
       resources {
         limits = {
           cpu    = "2"
@@ -13,8 +13,6 @@ resource "google_cloud_run_v2_service" "default" {
         }
       }
     }
-
-    # Include other necessary configurations such as scaling, vpc_access, etc.
   }
 
   # Traffic configuration
@@ -22,8 +20,6 @@ resource "google_cloud_run_v2_service" "default" {
     type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
     percent = 100
   }
-
-  # Additional configurations as needed
 }
 
 resource "google_cloud_run_service_iam_member" "public_invoker" {

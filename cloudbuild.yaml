@@ -16,11 +16,11 @@ steps:
     args:
       - "run"
       - "deploy"
-      - "cloudrun-service" # Make sure this is your service name
+      - "cloudrun-service"
       - "--image=gcr.io/$PROJECT_ID/fastapi-your-data:latest"
-      - "--region=us-central1" # Confirm this is your desired region
+      - "--region=us-central1"
       - "--platform=managed"
-      - "--allow-unauthenticated" # Consider removing if you need authenticatio
+      - "--allow-unauthenticated"
 
 images:
   - "gcr.io/$PROJECT_ID/fastapi-your-data:latest"
