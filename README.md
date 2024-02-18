@@ -53,7 +53,7 @@ Execute in terminal:
 docker-compose -f docker-compose-dev.yml up --build
 ```
 
-## Deploying to a Cloud Instance (e.g., GCP Compute Engine)
+## Deploying to a Cloud Instance (e.g., GCP Compute Engine
 
 1. Log in to Docker:
 

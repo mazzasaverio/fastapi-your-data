@@ -14,3 +14,24 @@ services:
       - .env
     ports:
       - "8000:8000"
+    depends_on:
+      - database
+
+  database:
+    image: ankane/pgvector:v0.4.1
+    restart: always
+    container_name: database
+    env_file: ".env"
+    user: root
+    volumes:
+      - ./db_docker:/var/lib/postgresql
+      - ./scripts/create-dbs.sql:/docker-entrypoint-initdb.d/create-dbs.sql
+    ports:
+      - 5433:5432
+    expose:
+      - 5433
+    environment:
+      - POSTGRES_USERNAME=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DATABASE=${DB_NAME}
+      - POSTGRES_HOST_AUTH_METHOD= "trust"

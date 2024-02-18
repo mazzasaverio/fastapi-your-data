@@ -23,7 +23,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: inter92/fastapi-service
+          images: inter92/fastapi-your-data
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3

@@ -1,6 +1,8 @@
 *.ipynb
 *frontend
 frontend/*
+db_docker
+custom_tree_and_files_corrected.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
