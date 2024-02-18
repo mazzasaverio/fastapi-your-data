@@ -66,6 +66,11 @@ module "secret_manager" {
   github_token = var.github_token
 }
 
+
+
+
+
+
 module "cloud_build" {
   source                     = "./modules/cloud_build"
   gcp_project_id             = var.gcp_project_id
@@ -83,15 +88,15 @@ module "cloud_build" {
 }
 
 
-# module "cloud_run" {
-#   source = "./modules/cloud_run"
+module "cloud_run" {
+  source = "./modules/cloud_run"
 
-#   gcp_project_id = var.gcp_project_id
-#   gcp_region     = var.gcp_region
-#   network_id     = var.gcp_network_name
-#   depends_on = [
-#     module.secret_manager,
-#     module.cloud_build
+  gcp_project_id = var.gcp_project_id
+  gcp_region     = var.gcp_region
+  network_id     = var.gcp_network_name
+  depends_on = [
+    module.secret_manager,
+    module.cloud_build
 
-#   ]
-# }
+  ]
+}
