@@ -1,11 +1,7 @@
-import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from dotenv import load_dotenv
 from typing import List
-import json
 from loguru import logger
 import sys
-from pathlib import Path
 
 
 class Settings(BaseSettings):

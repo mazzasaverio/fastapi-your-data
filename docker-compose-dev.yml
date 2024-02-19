@@ -5,14 +5,13 @@ services:
     container_name: fastapi-your-data
     build: ./backend
     restart: always
-    command: uvicorn app.main:app --reload --workers 3 --host 0.0.0.0 --port 8080
+    command: uvicorn app.main:app --port=${PORT:-8080} --host=0.0.0.0
     volumes:
       - ./backend/app:/code
     expose:
       - 8080
     env_file:
       - .env
-
     ports:
       - "8080:8080"
     depends_on:
