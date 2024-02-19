@@ -81,8 +81,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h3 id="improved-medium-post-translation">Improved Medium Post Translation</h3>
-<h4 id="database-initialization-and-pgvector-extension">Database Initialization and pgvector Extension</h4>
+                <h4 id="database-initialization-and-pgvector-extension">Database Initialization and pgvector Extension</h4>
 <p>I've refined the initialization process for the pgvector vector database as follows:</p>
 <pre><code class="language-python">async def init_db() -&gt; None:
     create_database(
@@ -103,6 +102,7 @@
 
     logger.info(&quot;Database initialized and all tables created if they didn't exist.&quot;)
 </code></pre>
+<h3 id="1">1</h3>
 <p>By leveraging the following:</p>
 <pre><code class="language-python">@asynccontextmanager
 async def app_lifespan(app: FastAPI):
@@ -111,7 +111,9 @@ async def app_lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=app_lifespan)
 </code></pre>
-<p>This approach internalizes the process within the code, eliminating the need for workarounds and optimizing the setup. I've also modified the Dockerfile as follows to avoid issues with model loading each time the application is launched:</p>
+<p>This approach internalizes the process within the code, eliminating the need for workarounds and optimizing the setup.</p>
+<h3 id="2">2</h3>
+<p>I've also modified the Dockerfile as follows to avoid issues with model loading each time the application is launched:</p>
 <pre><code class="language-dockerfile"># Install necessary dependencies
 RUN pip install sentence-transformers
 
@@ -119,8 +121,9 @@ RUN pip install sentence-transformers
 RUN python -c &quot;from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')&quot;
 </code></pre>
 <p>This setup will be replaced with a solution where the model is either loaded from a volume or the results are directly returned via an API (we'll test OpenAI's embedding models).</p>
+<h3 id="3">3</h3>
 <p>Additionally, I plan to explore another extension integrated with PostgreSQL, <code>pg_embedding</code>, as seen below:</p>
-<p><img alt="pg_embedding" src="../pg_embedding.png" /></p>
+<p><img alt="pg_embedding" src="./images/pg_embedding.png" /></p>
 <p>As hinted at in the previous episode, the next step involves setting up Cloud Run connected to Cloud SQL for PostgreSQL.</p>
 <p>Stay tuned.</p>
               
