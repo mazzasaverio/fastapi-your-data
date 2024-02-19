@@ -1,5 +1,3 @@
-### Improved Medium Post Translation
-
 #### Database Initialization and pgvector Extension
 
 I've refined the initialization process for the pgvector vector database as follows:
@@ -25,6 +23,8 @@ async def init_db() -> None:
     logger.info("Database initialized and all tables created if they didn't exist.")
 ```
 
+### 1
+
 By leveraging the following:
 
 ```python
@@ -36,7 +36,11 @@ async def app_lifespan(app: FastAPI):
 app = FastAPI(lifespan=app_lifespan)
 ```
 
-This approach internalizes the process within the code, eliminating the need for workarounds and optimizing the setup. I've also modified the Dockerfile as follows to avoid issues with model loading each time the application is launched:
+This approach internalizes the process within the code, eliminating the need for workarounds and optimizing the setup.
+
+### 2
+
+I've also modified the Dockerfile as follows to avoid issues with model loading each time the application is launched:
 
 ```dockerfile
 # Install necessary dependencies
@@ -48,9 +52,11 @@ RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTr
 
 This setup will be replaced with a solution where the model is either loaded from a volume or the results are directly returned via an API (we'll test OpenAI's embedding models).
 
+### 3
+
 Additionally, I plan to explore another extension integrated with PostgreSQL, `pg_embedding`, as seen below:
 
-![pg_embedding](pg_embedding.png)
+![pg_embedding](./images/pg_embedding.png)
 
 As hinted at in the previous episode, the next step involves setting up Cloud Run connected to Cloud SQL for PostgreSQL.
 

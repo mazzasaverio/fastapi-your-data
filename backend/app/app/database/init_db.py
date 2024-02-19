@@ -47,7 +47,6 @@ def create_database(database_name, user, password, host, port):
         else:
             logger.info(f"Database '{database_name}' already exists.")
 
-        # Close connection
         cur.close()
         conn.close()
     except Exception as e:
@@ -76,36 +75,3 @@ async def init_db() -> None:
         await conn.run_sync(Base.metadata.create_all)
 
     logger.info("Database initialized and all tables created if they didn't exist.")
-
-
-import asyncpg
-import psycopg2
-from loguru import logger
-from sqlalchemy import create_engine, text
-from sqlalchemy.exc import OperationalError
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from app.core.config import settings
-from app.models.github_model import Base
-
-
-def create_database(database_name, user, password, host, port):
-    try:
-        conn = psycopg2.connect(
-            dbname="postgres", user=user, password=password, host=host, port=port
-        )
-        conn.autocommit = True
-        cur = conn.cursor()
-
-        cur.execute(
-            "SELECT 1 FROM pg_catalog.pg_database WHERE datname = %s", (database_name,)
-        )
-        if cur.fetchone() is None:
-            cur.execute("CREATE DATABASE %s", (database_name,))
-            logger.info(f"Database '{database_name}' created.")
-        else:
-            logger.info(f"Database '{database_name}' already exists.")
-    except Exception as e:
-        logger.error(f"Error creating database: {e}")
-    finally:
-        cur.close()
-        conn.close()
