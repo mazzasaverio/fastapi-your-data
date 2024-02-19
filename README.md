@@ -70,7 +70,7 @@ docker-compose -f docker-compose-dev.yml up --build
 3. Run the container:
 
    ```
-   docker run -p 8000:8000 --network="host" -e DB_HOST=${DB_HOST}   -e DB_PORT=${DB_PORT}  -e DB_NAME=${DB_NAME}   -e DB_PASS=${DB_PASS}  -e DB_USER=${DB_USER}   -e API_KEY=${API_KEY}  inter92/fastapi-service:master
+   docker run -p 8080:8080 --network="host" -e DB_HOST=${DB_HOST}   -e DB_PORT=${DB_PORT}  -e DB_NAME=${DB_NAME}   -e DB_PASS=${DB_PASS}  -e DB_USER=${DB_USER}   -e API_KEY=${API_KEY}  inter92/fastapi-service:master
    ```
 
 ## Additional Resources
@@ -120,7 +120,7 @@ This warning indicates a change in the server's SSH fingerprint, potentially sig
 2. Run the container:
 
    ```
-   docker run -d --name fastapi_container -p 8000:8000 \
+   docker run -d --name fastapi_container -p 8080:8080 \
    --network="host" \
    --env-file ./.env \
    fastapi-app

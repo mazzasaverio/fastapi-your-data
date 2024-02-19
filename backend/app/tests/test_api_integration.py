@@ -11,7 +11,7 @@ from loguru import logger
 load_dotenv()
 
 # The base URL of the FastAPI server
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "http://127.0.0.1:8080"
 
 # The endpoint to test
 ENDPOINT = "/documents/"

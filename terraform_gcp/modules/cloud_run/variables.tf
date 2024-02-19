@@ -3,10 +3,22 @@ variable "gcp_region" {
   type        = string
 }
 
+
 variable "network_id" {
   description = "The ID of the VPC network."
   type        = string
 }
+
+variable "subnetwork_id" {
+  description = "The ID of the subnetwork."
+  type        = string
+}
+
+variable "gcp_db_instance_ip_address" {
+  description = "The private IP address of the Cloud SQL instance."
+  type        = string
+}
+
 
 variable "gcp_project_id" {
   description = "Project ID"

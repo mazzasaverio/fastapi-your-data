@@ -78,7 +78,7 @@ Use MkDocs' built-in server to preview your documentation:
 mkdocs serve
 ````
 
-Visit `http://127.0.0.1:8000` in your browser to see your documentation.
+Visit `http://127.0.0.1:8080` in your browser to see your documentation.
 
 #### Deploying Documentation
 
