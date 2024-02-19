@@ -52,6 +52,8 @@ sub_app_1.include_router(admin.router)
 sub_app_1.include_router(management.router)
 ```
 
+##
+
 These sub-applications are typical FastAPI microservice applications containing all essential components such as routers, middleware, exception handlers, and all necessary packages to build REST API services. The only difference from standard applications is that their context paths or URLs are defined and managed by the top-level application that oversees them.
 
 Optionally, we can run sub-applications independently from `main.py` using commands like `uvicorn main:sub_app_1 --port 8001` for `sub_app_1`, `uvicorn main:sub_app_2 --port 8082` for `sub_app_2`, and `uvicorn main:sub_app_3 --port 8003` for `sub_app_3`. The ability to run them independently despite being mounted illustrates why these mounted sub-applications are considered microservices.
@@ -109,6 +111,8 @@ def call_api_gateway(request: Request):
 class RedirectSubApp1PortalException(Exception):
     pass
 ```
+
+### Evaluating the Microservice ID
 
 This solution is a practical workaround to initiate a custom event, as FastAPI lacks built-in event handling aside from startup and shutdown event handlers. Once `call_api_gateway()` identifies `portal_id` as a valid microservice ID, it will raise custom exceptions. For instance, it will throw `RedirectStudentPortalException` if the user aims to access a specific microservice. However, first, we need to inject `call_api_gateway()` into the `APIRouter` instance managing the gateway endpoint through the `main.py` component of the top-level application.
 

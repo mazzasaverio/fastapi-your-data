@@ -3,3 +3,4 @@ from .endpoints import score
 
 api_router = APIRouter()
 api_router.include_router(score.router, tags=["score"])
+api_router.include_router(score.router, tags=["start-etl-process"])

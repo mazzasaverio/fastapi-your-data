@@ -2,6 +2,7 @@ from app.api.v1.api import api_router as api_router_v1
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.database.init_db import init_db
+from fastapi.responses import RedirectResponse
 
 
 # @asynccontextmanager
@@ -26,4 +27,4 @@ def metrics():
 
 @app.get("/")
 async def home():
-    return "Welcome!"
+    return RedirectResponse(url="/docs")

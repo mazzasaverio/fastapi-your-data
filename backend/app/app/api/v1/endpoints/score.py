@@ -1,13 +1,4 @@
-from fastapi import APIRouter
-
-router = APIRouter()
-
-
-@router.get("/get_score")
-async def get_score():
-    return {"option1": "score1", "option2": "score2", "option3": "score3"}
-
-
+from fastapi import FastAPI
 from app.api.v1.endpoints.pipeline.extract import (
     fetch_users_by_location,
     fetch_repo_readmes,
@@ -20,12 +11,21 @@ from app.api.v1.endpoints.pipeline.load import load_to_database
 from loguru import logger
 from app.database.session import get_session
 from app.core.config import settings
-import os
+
+from fastapi import APIRouter
+
+router = APIRouter()
 
 session = get_session()
 
 
-def main():
+@router.get("/get_score")
+async def get_score():
+    return {"option1": "score1", "option2": "score2", "option3": "score3"}
+
+
+@router.get("/start-etl-process")
+async def start_etl_process():
     location = settings.LOCATION
     max_users = settings.MAX_USERS
     max_repos_per_user = settings.MAX_REPOS_PER_USER
