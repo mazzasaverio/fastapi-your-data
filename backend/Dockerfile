@@ -15,4 +15,4 @@ COPY ./app /code/app
 ENV PYTHONPATH=/code
 EXPOSE 8080
 
-CMD uvicorn app.main:app --port=${PORT:-8080} --host=0.0.0.0
+CMD ["conda", "run", "-n", "fastapi-your-data", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
