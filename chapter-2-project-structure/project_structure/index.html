@@ -121,6 +121,7 @@ sub_app_1 = FastAPI()
 sub_app_1.include_router(admin.router)
 sub_app_1.include_router(management.router)
 </code></pre>
+<h2 id="_1"></h2>
 <p>These sub-applications are typical FastAPI microservice applications containing all essential components such as routers, middleware, exception handlers, and all necessary packages to build REST API services. The only difference from standard applications is that their context paths or URLs are defined and managed by the top-level application that oversees them.</p>
 <p>Optionally, we can run sub-applications independently from <code>main.py</code> using commands like <code>uvicorn main:sub_app_1 --port 8001</code> for <code>sub_app_1</code>, <code>uvicorn main:sub_app_2 --port 8082</code> for <code>sub_app_2</code>, and <code>uvicorn main:sub_app_3 --port 8003</code> for <code>sub_app_3</code>. The ability to run them independently despite being mounted illustrates why these mounted sub-applications are considered microservices.</p>
 <h3 id="mounting-submodules">Mounting Submodules</h3>
@@ -160,6 +161,7 @@ def call_api_gateway(request: Request):
 class RedirectSubApp1PortalException(Exception):
     pass
 </code></pre>
+<h3 id="evaluating-the-microservice-id_1">Evaluating the Microservice ID</h3>
 <p>This solution is a practical workaround to initiate a custom event, as FastAPI lacks built-in event handling aside from startup and shutdown event handlers. Once <code>call_api_gateway()</code> identifies <code>portal_id</code> as a valid microservice ID, it will raise custom exceptions. For instance, it will throw <code>RedirectStudentPortalException</code> if the user aims to access a specific microservice. However, first, we need to inject <code>call_api_gateway()</code> into the <code>APIRouter</code> instance managing the gateway endpoint through the <code>main.py</code> component of the top-level application.</p>
 <pre><code class="language-python">from fastapi import FastAPI, Depends, Request, Response
 from gateway.api_router import call_api_gateway
