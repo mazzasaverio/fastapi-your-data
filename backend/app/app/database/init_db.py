@@ -6,6 +6,24 @@ from loguru import logger
 from app.core.config import settings
 from app.models.github_model import Base
 from sqlalchemy.ext.asyncio.session import AsyncSession
+import asyncpg
+from sqlalchemy.ext.asyncio import create_async_engine
+
+
+async def create_extension():
+    conn: asyncpg.Connection = await asyncpg.connect(
+        user=settings.DB_USER,
+        password=settings.DB_PASS,
+        database=settings.DB_NAME,
+        host=settings.DB_HOST,
+    )
+    try:
+        await conn.execute("CREATE EXTENSION IF NOT EXISTS vector")
+        logger.info("pgvector extension created or already exists.")
+    except Exception as e:
+        logger.error(f"Error creating pgvector extension: {e}")
+    finally:
+        await conn.close()
 
 
 def create_database(database_name, user, password, host, port):
@@ -23,7 +41,7 @@ def create_database(database_name, user, password, host, port):
         )
         exists = cur.fetchone()
         if not exists:
-            # Create database if it doesn't exist
+
             cur.execute(f"CREATE DATABASE {database_name}")
             logger.info(f"Database '{database_name}' created.")
         else:
@@ -40,8 +58,6 @@ from sqlalchemy import text
 
 
 async def init_db() -> None:
-    # def init_db():
-    # Attempt to create the database if it doesn't exist
 
     create_database(
         settings.DB_NAME,
@@ -50,19 +66,46 @@ async def init_db() -> None:
         settings.DB_HOST,
         settings.DB_PORT,
     )
+    # After initializing the database, ensure the vector extension is created
+    await create_extension()
+    logger.info("Vector extension creation check attempted.")
 
-    # Create an engine instance
-    engine = create_engine(settings.DATABASE_URI)
+    async_engine = create_async_engine(settings.ASYNC_DATABASE_URI, echo=True)
 
-    # try:
-    #     with engine.connect() as conn:
-    #         conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
-    # except Exception as e:
-    #     logger.error(f"Error creating extension: {e}")
+    async with async_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
-    # Create all tables in the database
+    logger.info("Database initialized and all tables created if they didn't exist.")
+
+
+import asyncpg
+import psycopg2
+from loguru import logger
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import OperationalError
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from app.core.config import settings
+from app.models.github_model import Base
+
+
+def create_database(database_name, user, password, host, port):
     try:
-        Base.metadata.create_all(bind=engine)
-        logger.info("Database initialized and all tables created")
-    except OperationalError as e:
-        logger.error(f"Error in initializing database: {e}")
+        conn = psycopg2.connect(
+            dbname="postgres", user=user, password=password, host=host, port=port
+        )
+        conn.autocommit = True
+        cur = conn.cursor()
+
+        cur.execute(
+            "SELECT 1 FROM pg_catalog.pg_database WHERE datname = %s", (database_name,)
+        )
+        if cur.fetchone() is None:
+            cur.execute("CREATE DATABASE %s", (database_name,))
+            logger.info(f"Database '{database_name}' created.")
+        else:
+            logger.info(f"Database '{database_name}' already exists.")
+    except Exception as e:
+        logger.error(f"Error creating database: {e}")
+    finally:
+        cur.close()
+        conn.close()

@@ -5,17 +5,17 @@ from app.database.init_db import init_db
 from fastapi.responses import RedirectResponse
 
 
-# @asynccontextmanager
-# async def app_lifespan(app: FastAPI):
-#     # Database initialization
-#     await init_db()
+@asynccontextmanager
+async def app_lifespan(app: FastAPI):
+    # Database initialization
+    await init_db()
 
-#     yield
+    yield
 
 
-# app = FastAPI(lifespan=app_lifespan)
+app = FastAPI(lifespan=app_lifespan)
 
-app = FastAPI()
+# app = FastAPI()
 
 app.include_router(api_router_v1)
 
