@@ -6,6 +6,7 @@ from fastapi.responses import RedirectResponse
 from fastapi_pagination import add_pagination
 import os
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -19,6 +20,15 @@ app = FastAPI(lifespan=app_lifespan)
 
 
 app.include_router(api_router_v1)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/metrics")
