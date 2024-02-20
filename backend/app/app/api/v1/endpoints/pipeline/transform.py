@@ -1,8 +1,8 @@
-# from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer
 import re
 from loguru import logger
 
-# model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
+model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
 
 
 def clean_readme_text(readme_text):
