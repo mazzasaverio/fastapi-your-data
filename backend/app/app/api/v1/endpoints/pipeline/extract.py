@@ -2,6 +2,9 @@ import requests
 from app.api.v1.endpoints.utils.github_api import GitHubAPI
 from tqdm import tqdm
 from loguru import logger
+import os
+
+os.environ["CURL_CA_BUNDLE"] = ""
 
 
 def fetch_users_by_location(location, max_users, access_token):

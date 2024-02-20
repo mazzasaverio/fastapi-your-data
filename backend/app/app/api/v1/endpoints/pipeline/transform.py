@@ -39,6 +39,8 @@ def generate_embeddings(readme_text, model="text-embedding-3-small"):
         readme_text[i : i + max_length] for i in range(0, len(readme_text), max_length)
     ]
 
+    logger.debug("Generating embeddings for cleaned text")
+
     all_embeddings = []
     for chunk in chunks:
         # Generate embeddings for each chunk
@@ -46,6 +48,8 @@ def generate_embeddings(readme_text, model="text-embedding-3-small"):
             client.embeddings.create(input=[chunk], model=model).data[0].embedding
         )
         all_embeddings.extend(chunk_embedding)
+
+    logger.debug("Embeddings generated")
 
     # Optionally, you can average the embeddings from all chunks if needed
     # This step depends on how you plan to use the embeddings
