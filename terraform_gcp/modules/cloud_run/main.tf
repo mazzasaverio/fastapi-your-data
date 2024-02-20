@@ -17,7 +17,12 @@ data "google_secret_manager_secret_version" "db_name" {
   version = "latest"
 }
 
+data "google_secret_manager_secret_version" "github_token" {
+  secret  = "GITHUB_ACCESS_TOKEN"
+  project = var.gcp_project_id
 
+  version = "latest"
+}
 
 resource "google_cloud_run_v2_service" "default" {
   name         = "cloudrun-service"
@@ -54,6 +59,10 @@ resource "google_cloud_run_v2_service" "default" {
       env {
         name  = "DB_PORT"
         value = "5432"
+      }
+      env {
+        name  = "GITHUB_ACCESS_TOKEN"
+        value = var.github_token
       }
     }
     vpc_access {
