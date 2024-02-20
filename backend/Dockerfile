@@ -20,6 +20,7 @@ RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --with dev --no
 
 ENV PYTHONPATH=/code
 EXPOSE 8080
+EXPOSE 5432
 
 # Start application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
