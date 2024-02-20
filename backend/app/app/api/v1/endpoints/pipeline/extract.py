@@ -10,7 +10,7 @@ def fetch_users_by_location(location, max_users, access_token):
     headers = {"Authorization": f"token {access_token}"}
 
     try:
-        response = requests.get(url, headers=headers).json()
+        response = requests.get(url, headers=headers, timeout=70).json()
         users.extend(response.get("items", []))
         logger.info(
             f"Successfully fetched {len(users)} users from location: {location}"
