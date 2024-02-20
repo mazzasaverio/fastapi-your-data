@@ -1,5 +1,5 @@
 data "google_secret_manager_secret_version" "github_token" {
-  secret  = "github-token-secret"
+  secret  = "GITHUB_ACCESS_TOKEN"
   project = var.gcp_project_id
 }
 
@@ -12,7 +12,7 @@ data "google_iam_policy" "secret_accessor" {
 
 resource "google_secret_manager_secret_iam_policy" "policy" {
   project     = var.gcp_project_id
-  secret_id   = "github-token-secret"
+  secret_id   = "GITHUB_ACCESS_TOKEN"
   policy_data = data.google_iam_policy.secret_accessor.policy_data
 }
 

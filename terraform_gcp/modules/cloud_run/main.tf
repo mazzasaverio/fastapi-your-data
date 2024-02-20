@@ -62,7 +62,7 @@ resource "google_cloud_run_v2_service" "default" {
       }
       env {
         name  = "GITHUB_ACCESS_TOKEN"
-        value = var.github_token
+        value = data.google_secret_manager_secret_version.github_token.secret_data
       }
     }
     vpc_access {

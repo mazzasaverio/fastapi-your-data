@@ -25,7 +25,4 @@ variable "gcp_project_id" {
   type        = string
 }
 
-variable "github_token" {
-  description = "GitHub Access Token"
-  type        = string
-}
+
