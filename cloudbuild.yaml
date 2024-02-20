@@ -21,6 +21,7 @@ steps:
       - "--region=us-central1"
       - "--platform=managed"
       - "--allow-unauthenticated"
+      - "--set-env-vars=PORT=8080"
 
 images:
   - "gcr.io/$PROJECT_ID/fastapi-your-data:latest"
