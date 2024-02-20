@@ -71,3 +71,15 @@ resource "google_compute_firewall" "allow_fastapi" {
 
   source_ranges = ["0.0.0.0/0"]
 }
+
+resource "google_compute_firewall" "egress_https" {
+  name               = "egress-https"
+  network            = var.gcp_network_name
+  direction          = "EGRESS"
+  destination_ranges = ["0.0.0.0/0"] # This specifies all destinations
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+}

@@ -11,12 +11,7 @@ def fetch_users_by_location(location, max_users, access_token):
 
     try:
 
-        proxies = {
-            "http": "http://10.10.1.10:port",
-            "https": "http://10.10.1.10:port",
-        }
-
-        response = requests.get(url, headers=headers, proxies=proxies).json()
+        response = requests.get(url, headers=headers).json()
         users.extend(response.get("items", []))
         logger.info(
             f"Successfully fetched {len(users)} users from location: {location}"
