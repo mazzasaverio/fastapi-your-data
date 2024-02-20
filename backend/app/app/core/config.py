@@ -26,9 +26,9 @@ class Settings(BaseSettings):
     # github module settings
     GITHUB_ACCESS_TOKEN: str
 
-    LOCATION: str
-    MAX_USERS: int
-    MAX_REPOS_PER_USER: int
+    LOCATION: str = "Milan"
+    MAX_USERS: int = 4
+    MAX_REPOS_PER_USER: int = 2
     model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
 

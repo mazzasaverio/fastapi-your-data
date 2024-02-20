@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.database.init_db import init_db
 from fastapi.responses import RedirectResponse
+from fastapi_pagination import add_pagination
 
 
 @asynccontextmanager
