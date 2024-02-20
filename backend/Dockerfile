@@ -19,4 +19,5 @@ ENV PYTHONPATH=/code
 EXPOSE 8080
 
 # CMD uvicorn app.main:app --port=${PORT:-8080} --host=0.0.0.0
+CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app"]
 
