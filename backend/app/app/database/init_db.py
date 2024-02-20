@@ -58,13 +58,13 @@ from sqlalchemy import text
 
 async def init_db() -> None:
 
-    create_database(
-        settings.DB_NAME,
-        settings.DB_USER,
-        settings.DB_PASS,
-        settings.DB_HOST,
-        settings.DB_PORT,
-    )
+    # create_database(
+    #     settings.DB_NAME,
+    #     settings.DB_USER,
+    #     settings.DB_PASS,
+    #     settings.DB_HOST,
+    #     settings.DB_PORT,
+    # )
     # After initializing the database, ensure the vector extension is created
     await create_extension()
     logger.info("Vector extension creation check attempted.")
