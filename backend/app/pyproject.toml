@@ -22,6 +22,7 @@ fastapi-pagination = "^0.12.16"
 asyncpg = "^0.29.0"
 psycopg2-binary = "^2.9.9"
 sqlalchemy = "^2.0.27"
+sentence-transformers = "^2.3.1"
 
 
 [build-system]
