@@ -13,7 +13,7 @@ def fetch_users_by_location(location, max_users, access_token):
     headers = {"Authorization": f"token {access_token}"}
 
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=30, verify=False)
         if response.status_code == 200:
             users_data = response.json()
             users.extend(users_data.get("items", []))

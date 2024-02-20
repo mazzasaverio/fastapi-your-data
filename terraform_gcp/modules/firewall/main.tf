@@ -95,3 +95,4 @@ resource "google_compute_firewall" "allow_dns" {
     ports    = ["53"]
   }
 }
+
