@@ -10,14 +10,19 @@ def fetch_users_by_location(location, max_users, access_token):
     headers = {"Authorization": f"token {access_token}"}
 
     try:
-
-        response = requests.get(url, headers=headers).json()
-        users.extend(response.get("items", []))
-        logger.info(
-            f"Successfully fetched {len(users)} users from location: {location}"
-        )
-    except Exception as e:
-        logger.error(f"Failed to fetch users from location: {location}. Error: {e}")
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            users_data = response.json()
+            users.extend(users_data.get("items", []))
+            logger.info(
+                f"Successfully fetched {len(users)} users from location: {location}"
+            )
+        else:
+            logger.error(
+                f"Failed to fetch users from location: {location}. Status code: {response.status_code}"
+            )
+    except requests.RequestException as e:
+        logger.error(f"Request failed for location: {location}. Error: {e}")
 
     return users
 
