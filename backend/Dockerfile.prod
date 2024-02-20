@@ -1,20 +1,25 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim as base
-
-# Set environment varibles
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Set working directory
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11-slim
+ENV PYTHONUNBUFFERED=1
 WORKDIR /code
-
-# Install dependencies
-COPY backend/pyproject.toml backend/poetry.lock* /code/
-RUN pip install poetry && poetry config virtualenvs.create false \
-    && poetry install --no-dev --no-interaction --no-ansi
+# Install Poetry
+RUN apt clean && apt update && apt install curl -y
+RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
+    cd /usr/local/bin && \
+    ln -s /opt/poetry/bin/poetry && \
+    poetry config virtualenvs.create false
 
 # Copy project
-COPY backend/app /code/app
+COPY app/app /code
+
+# Copy poetry.lock* in case it doesn't exist in the repo
+COPY app/pyproject.toml app/poetry.lock* /code/
+
+# Allow installing dev dependencies to run tests
+ARG INSTALL_DEV=false
+RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --with dev --no-root ; else poetry install --no-root --no-dev ; fi"
+
+ENV PYTHONPATH=/code
+EXPOSE 8080
 
 # Start application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
