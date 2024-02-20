@@ -14,8 +14,8 @@ variable "subnetwork_id" {
   type        = string
 }
 
-variable "gcp_db_instance_ip_address" {
-  description = "The private IP address of the Cloud SQL instance."
+variable "cloud_sql_connection_name" {
+  description = "The connection name for the Cloud SQL instance."
   type        = string
 }
 
@@ -25,4 +25,7 @@ variable "gcp_project_id" {
   type        = string
 }
 
-
+variable "gcp_db_instance_ip_address" {
+  description = "The IP address of the Cloud SQL instance."
+  type        = string
+}

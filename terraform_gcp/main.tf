@@ -150,7 +150,9 @@ module "cloud_run" {
   gcp_region                 = var.gcp_region
   network_id                 = module.network.network_id
   subnetwork_id              = module.network.subnetwork_id
+  cloud_sql_connection_name  = module.cloud_sql.connection_name
   gcp_db_instance_ip_address = module.cloud_sql.instance_ip_address
+
 
   depends_on = [
     module.network,

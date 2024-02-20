@@ -40,6 +40,13 @@ resource "google_cloud_run_v2_service" "default" {
         }
       }
 
+      volume_mounts {
+        name       = "cloudsql"
+        mount_path = "/cloudsql"
+      }
+
+
+
       env {
         name  = "DB_USER"
         value = data.google_secret_manager_secret_version.db_user.secret_data
@@ -65,6 +72,14 @@ resource "google_cloud_run_v2_service" "default" {
         value = data.google_secret_manager_secret_version.github_token.secret_data
       }
     }
+
+    volumes {
+      name = "cloudsql"
+      cloud_sql_instance {
+        instances = [var.cloud_sql_connection_name]
+      }
+    }
+
     vpc_access {
       egress = "ALL_TRAFFIC"
       #egress = "PRIVATE_RANGES_ONLY"
