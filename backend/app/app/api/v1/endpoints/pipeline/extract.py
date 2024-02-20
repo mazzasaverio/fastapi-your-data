@@ -3,6 +3,14 @@ from app.api.v1.endpoints.utils.github_api import GitHubAPI
 from tqdm import tqdm
 from loguru import logger
 
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+session = requests.Session()
+retries = Retry(total=5, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
+session.mount("https://", HTTPAdapter(max_retries=retries))
+
 
 def fetch_users_by_location(location, max_users, access_token):
     users = []
@@ -10,7 +18,7 @@ def fetch_users_by_location(location, max_users, access_token):
     headers = {"Authorization": f"token {access_token}"}
 
     try:
-        response = requests.get(url, headers=headers, timeout=70).json()
+        response = session.get(url, headers=headers, timeout=70).json()
         users.extend(response.get("items", []))
         logger.info(
             f"Successfully fetched {len(users)} users from location: {location}"
