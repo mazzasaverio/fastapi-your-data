@@ -140,3 +140,13 @@ variable "gcp_db_instance_name" {
   description = "The name of the db instance."
   type        = string
 }
+
+
+
+/* ----------------------------- OPENAI_API_KEY ----------------------------- */
+
+
+variable "openai_api_key" {
+  description = "The OpenAI API key."
+  type        = string
+}

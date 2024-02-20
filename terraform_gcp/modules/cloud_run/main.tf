@@ -23,6 +23,12 @@ data "google_secret_manager_secret_version" "github_token" {
 
   version = "latest"
 }
+data "google_secret_manager_secret_version" "openai_api" {
+  secret  = "OPENAI_API_KEY"
+  project = var.gcp_project_id
+  version = "latest"
+}
+
 
 resource "google_cloud_run_v2_service" "default" {
   name         = "cloudrun-service"
@@ -38,6 +44,9 @@ resource "google_cloud_run_v2_service" "default" {
           cpu    = "2"
           memory = "1024Mi"
         }
+      }
+      ports {
+        container_port = 8080
       }
 
       volume_mounts {
@@ -70,6 +79,10 @@ resource "google_cloud_run_v2_service" "default" {
       env {
         name  = "GITHUB_ACCESS_TOKEN"
         value = data.google_secret_manager_secret_version.github_token.secret_data
+      }
+      env {
+        name  = "OPENAI_API_KEY"
+        value = data.google_secret_manager_secret_version.openai_api.secret_data
       }
     }
 

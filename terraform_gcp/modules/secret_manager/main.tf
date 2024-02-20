@@ -1,4 +1,22 @@
 
+
+
+/* ----------------------------- OPENAI API ----------------------------- */
+
+resource "google_secret_manager_secret" "openai_api_secret" {
+  secret_id = "OPENAI_API_KEY"
+  replication {
+    auto {}
+  }
+
+}
+
+resource "google_secret_manager_secret_version" "openai_api_secret_version" {
+  secret      = google_secret_manager_secret.openai_api_secret.id
+  secret_data = var.openai_api_key
+}
+
+
 /* ----------------------------- GITHUB ACCOUNT ----------------------------- */
 
 resource "google_secret_manager_secret" "github_token_secret" {
