@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     GITHUB_ACCESS_TOKEN: str
 
     LOCATION: str = "Milan"
-    MAX_USERS: int = 4
+    MAX_USERS: int = 2
     MAX_REPOS_PER_USER: int = 2
     model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
