@@ -83,3 +83,15 @@ resource "google_compute_firewall" "egress_https" {
     ports    = ["443"]
   }
 }
+
+resource "google_compute_firewall" "allow_dns" {
+  name               = "allow-dns"
+  network            = var.gcp_network_name
+  direction          = "EGRESS"
+  destination_ranges = ["0.0.0.0/0"]
+
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+}
