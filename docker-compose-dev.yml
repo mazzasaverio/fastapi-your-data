@@ -3,13 +3,10 @@ version: "3.8"
 services:
   fastapi_server:
     container_name: fastapi-your-data
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     restart: always
-    # Enable debug mode run .vscode/launch.json -> "Debug: Attach to FastAPI Docker"
-    # command: "sh -c 'pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8080 --loop asyncio'"
-    # ports:
-    #   - 5678:5678
-    # Disable debug mode if only frontend development
     command: "sh -c 'uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8080'"
     volumes:
       - ./backend/app:/code
