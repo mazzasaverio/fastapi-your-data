@@ -31,6 +31,9 @@ class Settings(BaseSettings):
     MAX_REPOS_PER_USER: int = 2
     model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
+    # openai module settings
+    OPENAI_API_KEY: str
+
 
 class LogConfig:
     LOGGING_LEVEL = "DEBUG"

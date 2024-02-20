@@ -70,8 +70,8 @@ module "secret_manager" {
   gcp_db_password = var.gcp_db_password
   gcp_db_name     = var.gcp_db_name
   gcp_db_port     = var.gcp_db_port
-
-  github_token = var.github_token
+  github_token    = var.github_token
+  openai_api_key  = var.openai_api_key
 }
 
 
