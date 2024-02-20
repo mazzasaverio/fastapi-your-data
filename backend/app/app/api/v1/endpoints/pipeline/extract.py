@@ -12,8 +12,8 @@ def fetch_users_by_location(location, max_users, access_token):
     try:
 
         proxies = {
-            "http": "http://10.10.1.10:3128",
-            "https": "http://10.10.1.10:1080",
+            "http": "http://10.10.1.10:port",
+            "https": "http://10.10.1.10:port",
         }
 
         response = requests.get(url, headers=headers, proxies=proxies).json()
