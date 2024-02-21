@@ -17,7 +17,7 @@ The ultimate ambition of this endeavor is not only to maximize my learning but a
 
 ## Current Features [TODO]
 
-## Principi guida
+## Guiding principles
 
 The guiding principles of this project are as follows:
 
