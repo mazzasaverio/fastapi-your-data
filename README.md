@@ -55,3 +55,7 @@ We welcome contributions! Feel free to open an issue or submit a pull request.
 - [JumpStart](https://github.com/Aeternalis-Ingenium/JumpStart): A starter template for new projects.
 - [instagraph-nextjs-fastapi](https://github.com/waseemhnyc/instagraph-nextjs-fastapi): Combining Next.js with FastAPI for Instagram-like applications.
 - [video-2-text](https://github.com/XamHans/video-2-text?tab=readme-ov-file): Focused on converting video content to text.
+
+## Watchlist Books
+
+- [Programming Massively Parallel Processors: A Hands-on Approach](https://amzn.to/3I8GM72)

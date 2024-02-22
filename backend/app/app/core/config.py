@@ -37,7 +37,7 @@ class Settings(BaseSettings):
 
 class LogConfig:
     LOGGING_LEVEL = "DEBUG"
-    LOGGING_FORMAT = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+    LOGGING_FORMAT = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <level>{message}</level>"
 
     @staticmethod
     def configure_logging():
