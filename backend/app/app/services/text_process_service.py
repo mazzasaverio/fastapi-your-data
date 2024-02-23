@@ -1,6 +1,7 @@
 import re
 import base64
 from loguru import logger
+from bs4 import BeautifulSoup
 
 
 class TextProcessService:
@@ -59,6 +60,23 @@ class TextProcessService:
         return text
 
     @staticmethod
+    def extract_text(html_content: str) -> str:
+        """
+        Extract textual content from HTML.
+
+        Args:
+            html_content (str): The HTML content to extract text from.
+
+        Returns:
+            str: The extracted textual content.
+        """
+        logger.info("Starting to extract text from HTML.")
+        soup = BeautifulSoup(html_content, "html.parser")
+        text = soup.get_text(separator=" ", strip=True)
+        logger.info("Finished extracting text from HTML.")
+        return text
+
+    @staticmethod
     def process_text(text: str) -> str:
         """
         Process the README text by cleaning HTML tags, decoding base64 content,
@@ -74,5 +92,6 @@ class TextProcessService:
         text = TextProcessService.clean_html_tags(text)
         text = TextProcessService.decode_base64(text)
         text = TextProcessService.normalize_text(text)
+        text = TextProcessService.extract_text(text)
         logger.info("Finished text processing.")
         return text

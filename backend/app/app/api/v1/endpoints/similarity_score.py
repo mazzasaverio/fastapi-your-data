@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.dependencies import get_db, get_embedding_service, get_similarity_service
 from app.services.embedding_service import EmbeddingService
 from app.services.similarity_service import SimilarityService
+from loguru import logger
 
 router = APIRouter()
 
@@ -15,7 +16,7 @@ async def calculate_similarity(
     similarity_service: SimilarityService = Depends(get_similarity_service),
 ):
     """
-    Calculate similarity scores between the input text and embeddings in the `git_repositories_n` table.
+    Calculate similarity scores between the input text and embeddings in the `git_repositories_n2` table.
 
     Args:
         input_text (str): The input text from the user.
@@ -28,9 +29,12 @@ async def calculate_similarity(
     """
     # Generate embedding for the input text
     input_embedding = embedding_service.generate_embeddings(input_text)
+    logger.info(f"Input embedding: {input_embedding}")
 
     # Calculate similarity scores
     similarities = await similarity_service.calculate_similarity(db, input_embedding)
+
+    logger.info(f"Similarities: {similarities}")
 
     # Format and return the results
     return {

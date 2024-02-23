@@ -30,47 +30,36 @@ async def data_ingestion(
         1, description="The maximum number of repositories per user."
     ),
     db: AsyncSession = Depends(get_db),
+    extraction_service: ExtractionService = Depends(get_extraction_service),
     text_process_service: TextProcessService = Depends(get_text_process_service),
     embedding_service: EmbeddingService = Depends(get_embedding_service),
-    extraction_service: ExtractionService = Depends(get_extraction_service),
 ):
-    logger.info("------------  Starting data ingestion process")
+
     try:
-        logger.info(" ------------ Extracting data")
-        all_data = await extraction_service.extract_data(
+        logger.info("1) ##### Extracting data")
+        all_data = extraction_service.extract_data(
             location, max_users, max_repos_per_user
         )
 
-        logger.info(" ------------ Filtering new READMEs")
+        logger.info("2) ##### Filtering new READMEs")
         existing_repos = await db.execute(select(GitRepository.repo_name))
-        logger.info(f"#### {existing_repos.scalars().all()}")
+
         existing_names = {repo.repo_name for repo in existing_repos.scalars().all()}
-        logger.info(f"#### {existing_names}")
+
         new_data = [
             data for data in all_data if data["repo_name"] not in existing_names
         ]
 
-        logger.info(" ------------ Processing READMEs")
+        logger.info("3) ##### Processing READMEs")
         processed_readmes = [
             text_process_service.process_text(data["readme"]) for data in new_data
         ]
 
-        logger.info(" ------------ Generating embeddings")
-        # embeddings = [
-        #     embedding_service.generate_embeddings(readme)
-        #     for readme in processed_readmes
-        # ]
-
-        # embeddings = await asyncio.gather(
-        #     *(
-        #         embedding_service.generate_embeddings(readme)
-        #         for readme in processed_readmes
-        #     )
-        # )
-        embeddings = []
-        for readme in processed_readmes:
-            embedding = embedding_service.generate_embeddings(readme)
-            embeddings.append(embedding)
+        logger.info("4) ##### Generating embeddings")
+        embeddings = [
+            embedding_service.generate_embeddings(readme)
+            for readme in processed_readmes
+        ]
 
         logger.info("Loading new data into database")
         github_crud = GitHubCRUD()

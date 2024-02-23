@@ -8,17 +8,17 @@ Base = declarative_base()
 
 
 class GitUser(Base):
-    __tablename__ = "git_users_n"
+    __tablename__ = "git_users_n2"
     username = Column(String, primary_key=True)
     location = Column(String)
     updated_at = Column(DateTime, default=datetime.utcnow)
 
 
 class GitRepository(Base):
-    __tablename__ = "git_repositories_n"
+    __tablename__ = "git_repositories_n2"
     repo_id = Column(Integer, primary_key=True)
     repo_name = Column(String)
-    username = Column(String, ForeignKey("git_users_n.username"))
+    username = Column(String, ForeignKey("git_users_n2.username"))
     readme_raw = Column(String)
     readme_cleaned = Column(String)
     readme_embedding = Column(Vector)
