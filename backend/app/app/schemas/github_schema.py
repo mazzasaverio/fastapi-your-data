@@ -9,7 +9,7 @@ class UserSchema(BaseModel):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Pydantic does not directly support all SQLAlchemy types (like Vector), so for those, we'll need to use a workaround or simply represent them as a generic type (like str or a list of floats) depending on the expected data structure.
@@ -23,4 +23,4 @@ class RepositorySchema(BaseModel):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True

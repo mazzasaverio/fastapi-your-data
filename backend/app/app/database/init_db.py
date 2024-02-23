@@ -5,6 +5,9 @@ from sqlalchemy.exc import OperationalError
 from loguru import logger
 from app.core.config import settings
 from app.models.github_model import Base
+from app.models.user_model import Base
+
+
 from sqlalchemy.ext.asyncio.session import AsyncSession
 import asyncpg
 from sqlalchemy.ext.asyncio import create_async_engine

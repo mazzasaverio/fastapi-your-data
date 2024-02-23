@@ -4,10 +4,10 @@ from typing import List, Optional
 
 
 class UserBase(BaseModel):
-    user_name: str
-    survey_id: int
+    user_name: Optional[str] = None
+    survey_id: Optional[str] = None
     survey_date: date
-    survey_text: str
+    survey_text: Optional[str] = None
     survey_embedding: Optional[List[float]] = None
 
 
@@ -19,4 +19,4 @@ class User(UserBase):
     user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -6,7 +6,8 @@ from app.core.config import settings
 from app.database.session import AsyncSessionFactory
 from app.services.embedding_service import EmbeddingService, OpenAIEmbeddingService
 from app.services.extraction_service import ExtractionService
-from app.services.similarity_service import SimilarityService
+
+# from app.services.similarity_service import SimilarityService
 from app.services.text_process_service import TextProcessService
 
 api_key_header = APIKeyHeader(name="access_token")
@@ -38,8 +39,8 @@ def get_extraction_service() -> ExtractionService:
     return ExtractionService(access_token=settings.GITHUB_ACCESS_TOKEN)
 
 
-def get_similarity_service() -> SimilarityService:
-    return SimilarityService()
+# def get_similarity_service() -> SimilarityService:
+#     return SimilarityService(...)
 
 
 def get_text_process_service() -> TextProcessService:

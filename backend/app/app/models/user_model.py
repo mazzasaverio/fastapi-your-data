@@ -5,8 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class UserModel(Base):
-    __tablename__ = "users"
+class UserSurveyModel(Base):
+    __tablename__ = "users_survey"
 
     user_id = Column(Integer, primary_key=True, index=True)
     user_name = Column(String, index=True)

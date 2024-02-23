@@ -7,35 +7,6 @@ from app.crud.base_crud import BaseCRUD
 from app.models.github_model import GitRepository, GitUser
 
 
-# class GitHubCRUD(BaseCRUD):
-#     def __init__(self):
-#         # Assuming you're working with GitRepository model here
-#         super().__init__(model=GitRepository)
-
-#     async def create_git_user(self, db: AsyncSession, user_data: dict) -> GitUser:
-#         existing_user = await db.execute(
-#             select(GitUser).filter(GitUser.username == user_data["username"])
-#         )
-#         if existing_user.scalars().first() is not None:
-#             # User already exists, skip creating a new user
-#             return existing_user.scalars().first()
-
-#         user = GitUser(**user_data)
-#         db.add(user)
-#         await db.commit()
-#         await db.refresh(user)
-#         return user
-
-#     async def create_git_repository(
-#         self, db: AsyncSession, repo_data: dict
-#     ) -> GitRepository:
-#         repository = GitRepository(**repo_data)
-#         db.add(repository)
-#         await db.commit()
-#         await db.refresh(repository)
-#         return repository
-
-
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
