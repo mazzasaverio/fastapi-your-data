@@ -17,9 +17,20 @@
 
 ### 5. Connecting Cloud Build to Your GitHub Account
 
-- Create a personal access token. Make sure to set your token (classic) to have no expiration date and select the following permissions when prompted in GitHub: repo and read:user. If your app is installed in an organization, make sure to also select the read:org permission.
+### Connecting Cloud Build to GitHub
 
-https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1
+#### Generate a Personal Access Token
+
+1. **Create Token**: Go to GitHub Settings > Developer settings > Personal access tokens > Generate new token.
+2. **Configure Token**: Choose 'No Expiration' and select `repo`, `read:user`, and `read:org` (if using an organization).
+
+#### Link GitHub to Cloud Build
+
+- **Follow Cloud Build Instructions**: Use the generated token to link your GitHub repositories to Cloud Build as per the [Cloud Build-GitHub integration guide](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1).
+
+- **Git Installation ID**: Find this in GitHub Settings under [GitHub Installations](https://github.com/settings/installations).
+
+This concise guide outlines the steps to connect Cloud Build with GitHub, enabling automated builds from your repositories.
 
 ## Terraform Configuration
 
